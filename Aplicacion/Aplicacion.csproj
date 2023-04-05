@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Negocio\Negocio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AplicacionesMantenimientos\" />
-  </ItemGroup>
-
 </Project>
