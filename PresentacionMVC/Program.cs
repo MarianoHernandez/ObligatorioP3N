@@ -7,6 +7,8 @@ using Aplicacion.AplicacionesTipoCabaña;
 using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
 using Aplicacion.AplicacionesCabaña;
+using Aplicacion.AplicacionesMantenimientos;
+using Aplicacion.AplicacionesUsuario;
 
 namespace PresentacionMVC
 {
@@ -22,7 +24,13 @@ namespace PresentacionMVC
             //AGREGAR INFORMACIÓN PARA LA INYECCIÓN DE DEPENDENCIAS AUTOMÁTICA:
             builder.Services.AddScoped<IRepositorioTipoCabania, RepositorioTipoCabania>();
             builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
+            builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 
+
+            builder.Services.AddScoped<ILoginUsuario, LoginUsuario>();
+            builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
+            builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
 
@@ -48,7 +56,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=TipoCabania}/{action=Create}/{id?}");
+                pattern: "{controller=Login}/{action=Index}/{id?}");
 
             app.Run();
         }
