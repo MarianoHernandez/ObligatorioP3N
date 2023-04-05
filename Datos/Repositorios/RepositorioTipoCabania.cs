@@ -26,7 +26,7 @@ namespace Datos.Repositorios
 
         public IEnumerable<TipoCabania> FindAll()
         {
-            throw new NotImplementedException();
+            return LibreriaContext.TipoCabania.ToList();
         }
 
         public TipoCabania FindById(int id)

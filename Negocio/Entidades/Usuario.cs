@@ -12,6 +12,7 @@ namespace Negocio.Entidades
     {
         public string email { get; set; }
         public string password { get; set; }
+        public int Id { get; set; }
 
         public void Validar()
         {

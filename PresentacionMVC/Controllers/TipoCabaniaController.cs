@@ -2,23 +2,29 @@
 using Datos.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Negocio.Entidades;
+using Negocio.ExcepcionesPropias.Cabanias;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PresentacionMVC.Controllers
 {
     public class TipoCabaniaController : Controller
     {
         IAltaTipoCabania AltaTipoCabania { get; set; }
-        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania)
+        IListadoTipoCabania ListadoTipoCabania { get; set; }
+        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IListadoTipoCabania listadoTipoCabania)
         {
             AltaTipoCabania = altaTipoCabania;
+            ListadoTipoCabania = listadoTipoCabania;
         }
 
 
         // GET: TipoCabaniaController
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<TipoCabania> tipos = ListadoTipoCabania.ObtenerListado();
+            return View(tipos);
         }
 
         // GET: TipoCabaniaController/Details/5
@@ -40,10 +46,18 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                tipoCabania.Validar();
+                AltaTipoCabania.Alta(tipoCabania);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (NombreInvalidoException ex)
             {
+                ViewBag.Mensaje = ex.Message;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
                 return View();
             }
         }

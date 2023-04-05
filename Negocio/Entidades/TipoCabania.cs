@@ -1,16 +1,14 @@
-﻿using Negocio.ExcepcionesPropias;
+﻿using Microsoft.EntityFrameworkCore;
+using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
 using Negocio.InterfacesDominio;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace Negocio.Entidades
 {
+    [Index(nameof(Nombre), IsUnique = true)]
     public class TipoCabania:IValidable
     {
         public int Id { get; set; }

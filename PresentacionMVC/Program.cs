@@ -24,7 +24,9 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
 
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
+
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
+            builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
 
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile("appsettings.json", false, true);
