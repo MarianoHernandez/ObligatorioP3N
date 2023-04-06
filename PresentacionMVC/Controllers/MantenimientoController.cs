@@ -1,4 +1,5 @@
 ﻿using Aplicacion.AplicacionesMantenimientos;
+using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
@@ -8,16 +9,19 @@ namespace PresentacionMVC.Controllers
     public class MantenimientoController : Controller
     {
         IAltaMantenimiento AltaMantenimiento { get; set; }
+        IListadoMantenimiento ListadoMantenimiento { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento)
         {
             AltaMantenimiento = altaMantenimiento;
+            ListadoMantenimiento = listadoMantenimiento;
         }
  
         // GET: ManteniminetoController
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Mantenimiento> mantenimiento = ListadoMantenimiento.ObtenerListado();
+            return View(mantenimiento);
         }
 
         // GET: ManteniminetoController/Details/5

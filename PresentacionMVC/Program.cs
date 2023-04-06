@@ -3,10 +3,8 @@ using Datos.Repositorios;
 using PresentacionMVC.Controllers;
 using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesTipoCabaña;
-
 using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
-using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesMantenimientos;
 using Aplicacion.AplicacionesUsuario;
 
@@ -32,8 +30,9 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
-
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
+
+            builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
             builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
 
             var configurationBuilder = new ConfigurationBuilder();
@@ -58,7 +57,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Index}/{id?}");
+                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
 
             app.Run();
         }
