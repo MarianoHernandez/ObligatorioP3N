@@ -10,5 +10,6 @@ namespace Negocio.InterfacesRepositorio
     public interface IRepositorioTipoCabania:IRepositorio<TipoCabania>
     {
         public TipoCabania FindByName(string nombre);
+        public void Remove(TipoCabania tipo);
     }
 }
