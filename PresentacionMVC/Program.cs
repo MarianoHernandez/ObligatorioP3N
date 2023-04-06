@@ -3,7 +3,6 @@ using Datos.Repositorios;
 using PresentacionMVC.Controllers;
 using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesTipoCabaña;
-
 using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
 using Aplicacion.AplicacionesMantenimientos;
@@ -31,9 +30,11 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
+            builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
 
             #region Build TipoCabania
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
+            builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
             builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
             builder.Services.AddScoped<IFindByName, FindByName>();
             builder.Services.AddScoped<IDeleteTipo, DeleteTipo>();
@@ -63,7 +64,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=TipoCabania}/{action=Create}/{id?}");
+                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
 
             app.Run();
         }

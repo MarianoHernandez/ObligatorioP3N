@@ -11,6 +11,7 @@ namespace Datos.Repositorios
 {
     public class RepositorioMantenimiento : IRepositorioMantenimiento
     {
+      
         public LibreriaContext Contexto { get; set; }
 
         public RepositorioMantenimiento(LibreriaContext ctx)
@@ -20,20 +21,21 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
-            throw new NotImplementedException();
+            obj.Validar();
+            Contexto.Mantenimiento.Add(obj);
+            Contexto.SaveChanges();
         }
 
+        public IEnumerable<Mantenimiento> FindAll()
+        {
+            return Contexto.Mantenimiento.ToList();
+        }
         public void Remove(int id)
         {
             throw new NotImplementedException();
         }
 
         public Mantenimiento FindById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Mantenimiento> FindAll()
         {
             throw new NotImplementedException();
         }

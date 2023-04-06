@@ -9,6 +9,7 @@ namespace PresentacionMVC.Controllers
     {
 
         ILoginUsuario LoginUsuario { get; set; }
+       
 
         public LoginController (ILoginUsuario loginUsuario)
         {

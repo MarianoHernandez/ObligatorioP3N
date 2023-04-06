@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesUsuario
 {
-    public class ILoginUsuario
+    public interface ILoginUsuario
     {
-        
     }
 }
