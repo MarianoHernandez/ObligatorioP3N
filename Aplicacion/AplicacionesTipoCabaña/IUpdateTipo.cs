@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesTipoCabaña
 {
-    public interface IFindById
+    public interface IUpdateTipo
     {
-        TipoCabania FindOneById(int id);
+        void Update(TipoCabania tipo);
     }
 }

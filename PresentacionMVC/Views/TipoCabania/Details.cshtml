@@ -1,10 +1,10 @@
 ﻿@model Negocio.Entidades.TipoCabania
 
 @{
-    ViewData["Title"] = "ShowOne";
+    ViewData["Title"] = "Details";
 }
 
-<h1>ShowOne</h1>
+<h1>Details</h1>
 
 <div>
     <h4>TipoCabania</h4>
@@ -37,6 +37,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { nombre = Model.Nombre}) |
+    @Html.ActionLink("Edit", "Edit", new { nombre = Model.Nombre }) |
     <a asp-action="Index">Back to List</a>
 </div>

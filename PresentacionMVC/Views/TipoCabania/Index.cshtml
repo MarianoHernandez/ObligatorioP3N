@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Costo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Edit", "Edit", new { nombre=item.Nombre }) |
                 @Html.ActionLink("Details", "Details", new {  nombre=item.Nombre }) |
-                    @Html.ActionLink("Delete", "Delete", new { nombre=item.Nombre})
+                @Html.ActionLink("Delete", "Delete", new { nombre=item.Nombre})
             </td>
         </tr>
 }

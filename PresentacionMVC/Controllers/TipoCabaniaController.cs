@@ -18,15 +18,17 @@ namespace PresentacionMVC.Controllers
         IListadoTipoCabania ListadoTipoCabania { get; set; }
         IFindByName FindByName { get; set; }
         IDeleteTipo DeleteTipo { get; set; }
-        IFindById FindById { get; set; }
+        IUpdateTipo UpdateTipo { get; set; }
 
-        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IFindById findById)
+ 
+
+        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo)
         {
             AltaTipoCabania = altaTipoCabania;
             ListadoTipoCabania = listadoTipoCabania;
             FindByName = findByName;
             DeleteTipo = deleteTipo;
-            FindById = findById;
+            UpdateTipo = updateTipo;    
         }
 
 
@@ -37,13 +39,15 @@ namespace PresentacionMVC.Controllers
             return View(tipos);
         }
 
-        public ActionResult ShowOne(TipoCabania tipo) {
+        public ActionResult ShowOne(TipoCabania tipo)
+        {
             return View(tipo);
         }
         
         public ActionResult FindOne() { 
             return View(); 
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult FindOne(string nombre)
@@ -69,10 +73,12 @@ namespace PresentacionMVC.Controllers
                 return View();
             }
         }
+
         // GET: TipoCabaniaController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string nombre)
         {
-            return View();
+            TipoCabania tipo = FindByName.FindOne(nombre);
+            return View(tipo);
         }
 
         // GET: TipoCabaniaController/Create
@@ -105,27 +111,6 @@ namespace PresentacionMVC.Controllers
             catch (Exception ex)
             {
                 ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
-                return View();
-            }
-        }
-
-        // GET: TipoCabaniaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TipoCabaniaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
                 return View();
             }
         }
@@ -175,5 +160,29 @@ namespace PresentacionMVC.Controllers
                 return View();
             }
         }
+
+        // GET: TipoCabaniaController/Edit/5
+        public ActionResult Edit(string nombre)
+        {
+            
+            return View(FindByName.FindOne(nombre));
+        }
+
+        // POST: TipoCabaniaController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(string nombre, TipoCabania tipo)
+        {
+            try
+            {
+                UpdateTipo.Update(tipo);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }

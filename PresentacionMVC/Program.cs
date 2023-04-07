@@ -30,15 +30,16 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
-            builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
+
+            builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
 
             #region Build TipoCabania
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
-            builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
             builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
             builder.Services.AddScoped<IFindByName, FindByName>();
             builder.Services.AddScoped<IDeleteTipo, DeleteTipo>();
-            builder.Services.AddScoped<IFindById, FindById>();
+            builder.Services.AddScoped<IUpdateTipo, UpdateTipo>();
+
             #endregion
 
 
@@ -64,7 +65,9 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
+
+                pattern: "{controller=TipoCabania}/{action=Index}/{id?}");
+
 
             app.Run();
         }
