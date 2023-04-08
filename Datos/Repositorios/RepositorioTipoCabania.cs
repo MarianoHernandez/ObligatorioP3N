@@ -1,4 +1,4 @@
-﻿using Datos.Entity;
+﻿    using Datos.Entity;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
 using Negocio.InterfacesRepositorio;

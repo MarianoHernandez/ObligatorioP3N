@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Datos.Entity;
 using Negocio.Entidades;
+using Microsoft.EntityFrameworkCore;
+using Negocio.ExcepcionesPropias;
 
 namespace Datos.Repositorios
 {
     public class RepositorioMantenimiento : IRepositorioMantenimiento
     {
-      
+
         public LibreriaContext Contexto { get; set; }
 
         public RepositorioMantenimiento(LibreriaContext ctx)
@@ -26,13 +28,20 @@ namespace Datos.Repositorios
             Contexto.SaveChanges();
         }
 
+        public Mantenimiento FindByDate(DateTime d1, DateTime d2)
+        {
+            throw new NotImplementedException();
+
+        }
+
         public IEnumerable<Mantenimiento> FindAll()
         {
             return Contexto.Mantenimiento.ToList();
         }
-        public void Remove(int id)
+        public void Remove(Mantenimiento mantenimiento)
         {
-            throw new NotImplementedException();
+            Contexto.Mantenimiento.Remove(mantenimiento);
+            Contexto.SaveChanges();
         }
 
         public Mantenimiento FindById(int id)
@@ -41,6 +50,12 @@ namespace Datos.Repositorios
         }
 
         public void Update(Mantenimiento obj)
+        {
+            Contexto.Mantenimiento.Update(obj);
+            Contexto.SaveChanges();
+        }
+
+        void IRepositorio<Mantenimiento>.Remove(int id)
         {
             throw new NotImplementedException();
         }

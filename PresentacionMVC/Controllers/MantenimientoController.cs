@@ -3,6 +3,7 @@ using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using Negocio.ExcepcionesPropias;
 
 namespace PresentacionMVC.Controllers
 {
@@ -10,13 +11,15 @@ namespace PresentacionMVC.Controllers
     {
         IAltaMantenimiento AltaMantenimiento { get; set; }
         IListadoMantenimiento ListadoMantenimiento { get; set; }
+        IDeleteMantenimiento DeleteMantenimiento { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
+            DeleteMantenimiento = deleteMantenimiento;
         }
- 
+
         // GET: ManteniminetoController
         public ActionResult Index()
         {
@@ -43,10 +46,13 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                mantenimiento.Validar();
+                AltaMantenimiento.Alta(mantenimiento);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Mensaje = "Ocurrio un error";
                 return View();
             }
         }
@@ -81,14 +87,21 @@ namespace PresentacionMVC.Controllers
         // POST: ManteniminetoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Mantenimiento mantenimiento)
         {
             try
             {
+                DeleteMantenimiento.DeleteMantenimiento(mantenimiento);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(NoEncontradoException ex)
             {
+                ViewBag.Mensaje = ex.Message;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Ocurrio un error";
                 return View();
             }
         }
