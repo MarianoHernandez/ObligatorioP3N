@@ -9,6 +9,6 @@ namespace Aplicacion.AplicacionesCabaña
 {
     public interface IAltaCabania
     {
-        void Alta(Cabania cabania);
+        void Alta(string nombreTipo,Cabania cabania);
     }
 }

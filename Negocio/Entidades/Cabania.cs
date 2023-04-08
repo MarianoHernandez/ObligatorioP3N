@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using Negocio.ExcepcionesPropias.Cabanias;
+using System.ComponentModel.DataAnnotations;
 
 namespace Negocio.Entidades
 {
@@ -27,14 +28,15 @@ namespace Negocio.Entidades
         public string Foto { get; set; }
         private static int NumeroFoto { get; set; } = 1;
 
-        public Cabania() { }
-        private string SerializeNombreFoto(string Foto) {
+        public string SerializeNombreFoto(string nombreFoto) {
             
-            Foto.Replace(" ", "_");
-            Foto += NumeroFoto;
+            this.Foto = nombreFoto.Replace(" ", "_");
+            this.Foto += NumeroFoto;
+            this.Foto += "png";
             NumeroFoto++;
             return Foto;
         }
+
 
         public void Validar()
         {
@@ -65,6 +67,8 @@ namespace Negocio.Entidades
                 throw new DescripcionInvalidaException("La descripcion no puede tener menos de 10 caracteres ni mas de 500");
             }
             #endregion
+
+
 
 
         }

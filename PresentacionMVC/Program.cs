@@ -1,6 +1,5 @@
 using Negocio.InterfacesRepositorio;
 using Datos.Repositorios;
-using PresentacionMVC.Controllers;
 using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesTipoCabaña;
 using Datos.Entity;
@@ -29,10 +28,14 @@ namespace PresentacionMVC
             builder.Services.AddScoped<ILoginUsuario, LoginUsuario>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
-            builder.Services.AddScoped<IAltaCabania, AltaCabania>();
-
             builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
-
+            
+            
+            #region Build cabania
+            builder.Services.AddScoped<IAltaCabania, AltaCabania>();
+            #endregion
+            
+            
             #region Build TipoCabania
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
             builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
@@ -41,6 +44,7 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IUpdateTipo, UpdateTipo>();
 
             #endregion
+
 
 
             var configurationBuilder = new ConfigurationBuilder();
@@ -65,8 +69,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-
-                pattern: "{controller=TipoCabania}/{action=Index}/{id?}");
+                pattern: "{controller=Cabania}/{action=Create}/{id?}");
 
 
             app.Run();

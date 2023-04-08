@@ -13,14 +13,19 @@ namespace Datos.Repositorios
 
     {
         public LibreriaContext LibreriaContext { get; set; }
-        public RepositorioCabania(LibreriaContext libreriaContext)
+        public IRepositorioTipoCabania TipoCabania { get; set; }    
+        public RepositorioCabania(LibreriaContext libreriaContext, IRepositorioTipoCabania tipoCabania)
         {
             LibreriaContext = libreriaContext;
+            TipoCabania = tipoCabania;
         }
 
-        public void Add(Cabania obj)
+        public void Add(string nombreTipo, Cabania obj)
         {
             obj.Validar();
+            obj.SerializeNombreFoto(obj.Nombre);
+            TipoCabania tipo = TipoCabania.FindByName(nombreTipo);
+            obj.TipoCabania = tipo;
             LibreriaContext.Cabania.Add(obj);
             LibreriaContext.SaveChanges();
         }
@@ -46,6 +51,11 @@ namespace Datos.Repositorios
         }
 
         public void Update(Cabania obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Cabania obj)
         {
             throw new NotImplementedException();
         }

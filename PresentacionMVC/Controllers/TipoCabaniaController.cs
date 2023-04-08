@@ -171,10 +171,13 @@ namespace PresentacionMVC.Controllers
         // POST: TipoCabaniaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string nombre, TipoCabania tipo)
+        public ActionResult Edit(string nombre, TipoCabania tipoEditado)
         {
             try
             {
+                TipoCabania tipo = FindByName.FindOne(nombre);
+                tipo.Costo = tipoEditado.Costo;
+                tipo.Descripcion = tipoEditado.Descripcion;                
                 UpdateTipo.Update(tipo);
                 return RedirectToAction(nameof(Index));
             }
