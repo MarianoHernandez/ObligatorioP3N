@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesCabaña
 {
-    public interface IAltaCabania
+    public interface IListadoCabania
     {
-        void Alta(Cabania cabania);
+        public IEnumerable<Cabania> ListadoAllCabania();
     }
 }

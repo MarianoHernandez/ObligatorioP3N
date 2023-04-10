@@ -18,7 +18,9 @@ namespace Negocio.Entidades
     {
 
         public int Id { get; set; }
+        
         public TipoCabania TipoCabania { get; set; }
+        public int IdTipoCabania { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public bool Jacuzzi { get; set; }
@@ -32,7 +34,7 @@ namespace Negocio.Entidades
             
             this.Foto = nombreFoto.Replace(" ", "_");
             this.Foto += NumeroFoto;
-            this.Foto += "png";
+            this.Foto += ".png";
             NumeroFoto++;
             return Foto;
         }

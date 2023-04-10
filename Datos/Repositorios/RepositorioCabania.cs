@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Datos.Entity;
+using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
 using Negocio.InterfacesRepositorio;
 
@@ -20,11 +21,11 @@ namespace Datos.Repositorios
             TipoCabania = tipoCabania;
         }
 
-        public void Add(string nombreTipo, Cabania obj)
+        public void Add( Cabania obj)
         {
             obj.Validar();
             obj.SerializeNombreFoto(obj.Nombre);
-            TipoCabania tipo = TipoCabania.FindByName(nombreTipo);
+            TipoCabania tipo = TipoCabania.FindById(obj.IdTipoCabania);
             obj.TipoCabania = tipo;
             LibreriaContext.Cabania.Add(obj);
             LibreriaContext.SaveChanges();
@@ -32,7 +33,8 @@ namespace Datos.Repositorios
 
         public IEnumerable<Cabania> FindAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania).ToList();
+            return lista;
         }
 
         public Cabania FindById(int id)
@@ -55,9 +57,5 @@ namespace Datos.Repositorios
             throw new NotImplementedException();
         }
 
-        public void Add(Cabania obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

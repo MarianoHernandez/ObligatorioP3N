@@ -4,6 +4,7 @@ using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datos.Migrations
 {
     [DbContext(typeof(LibreriaContext))]
-    partial class LibreriaContextModelSnapshot : ModelSnapshot
+    [Migration("20230410225903_MontevideoMariano")]
+    partial class MontevideoMariano
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,9 +46,6 @@ namespace Datos.Migrations
 
                     b.Property<bool>("Habilitada")
                         .HasColumnType("bit");
-
-                    b.Property<int>("IdTipoCabania")
-                        .HasColumnType("int");
 
                     b.Property<bool>("Jacuzzi")
                         .HasColumnType("bit");

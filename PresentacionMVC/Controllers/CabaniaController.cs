@@ -13,17 +13,22 @@ namespace PresentacionMVC.Controllers
     {
         IAltaCabania AltaCabania { get; set; }
         IListadoTipoCabania ListadoTipoCabania { get; set; }
+        IListadoCabania ListadoCabania {get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania) {
+
+        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania)
+        {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
+            ListadoCabania = listadoCabania;
         }
 
 
         // GET: CabaniaController
         public ActionResult Index()
         {
-            return View();
+            //ListadoCabania.ListadoAllCabania();
+            return View(ListadoCabania.ListadoAllCabania());
         }
 
         // GET: CabaniaController/Details/5
@@ -42,11 +47,11 @@ namespace PresentacionMVC.Controllers
         // POST: CabaniaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string TipoCabania, Cabania cabania)
+        public ActionResult Create(Cabania cabania)
         {
             try
             {
-                AltaCabania.Alta(TipoCabania,cabania);
+                AltaCabania.Alta(cabania);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -33,6 +33,8 @@ namespace PresentacionMVC
             
             #region Build cabania
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
+            builder.Services.AddScoped<IListadoCabania,ListadoCabania>();
+            builder.Services.AddScoped<IFindById, FindById>();
             #endregion
             
             
