@@ -25,7 +25,7 @@ namespace Datos.Repositorios
         {
             obj.Validar();
             obj.SerializeNombreFoto(obj.Nombre);
-            TipoCabania tipo = TipoCabania.FindById(obj.IdTipoCabania);
+            TipoCabania tipo = TipoCabania.FindById(obj.TipoCabaniaId);
             obj.TipoCabania = tipo;
             LibreriaContext.Cabania.Add(obj);
             LibreriaContext.SaveChanges();
@@ -39,7 +39,7 @@ namespace Datos.Repositorios
 
         public Cabania FindById(int id)
         {
-            throw new NotImplementedException();
+            return LibreriaContext.Cabania.Include(cab => cab.TipoCabania).SingleOrDefault(cabania => cabania.Id == id);
         }
 
         public IEnumerable<Cabania> FindCabaña(string nombre, TipoCabania tipo, int cantidadPers, bool habilitada)

@@ -1,4 +1,4 @@
-﻿@model Negocio.Entidades.Cabania
+﻿@model PresentacionMVC.Models.AltaCabaniaViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,40 +13,41 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="cabaniaNueva.Nombre" class="control-label"></label>
+                <input asp-for="cabaniaNueva.Nombre" class="form-control" />
+                <span asp-validation-for="cabaniaNueva.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                <label asp-for="cabaniaNueva.Descripcion" class="control-label"></label>
+                <input asp-for="cabaniaNueva.Descripcion" class="form-control" />
+                <span asp-validation-for="cabaniaNueva.Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdTipoCabania" class="control-label"></label>
-                <select asp-for="IdTipoCabania" asp-items="@(new SelectList(ViewBag.Tipos, "Id", "Nombre"))" class="form-control">
+                <label asp-for="idTipoCabania" class="control-label">Tipo Cabaña</label>
+                <select asp-for="idTipoCabania" asp-items="@(new SelectList(Model.tiposCabania, "Id", "Nombre"))" class="form-control">
+                    <option>Seleccione una opcion</option>
                 </select>
-                <span asp-validation-for="IdTipoCabania" class="text-danger"></span>
+                <span asp-validation-for="idTipoCabania" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Jacuzzi" /> @Html.DisplayNameFor(model => model.Jacuzzi)
+                    <input class="form-check-input" asp-for="cabaniaNueva.Jacuzzi" /> @Html.DisplayNameFor(model => model.cabaniaNueva.Jacuzzi)
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Habilitada" /> @Html.DisplayNameFor(model => model.Habilitada)
+                    <input class="form-check-input" asp-for="cabaniaNueva.Habilitada" /> @Html.DisplayNameFor(model => model.cabaniaNueva.Habilitada)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Numero" class="control-label"></label>
-                <input asp-for="Numero" class="form-control" />
-                <span asp-validation-for="Numero" class="text-danger"></span>
+                <label asp-for="cabaniaNueva.Numero" class="control-label"></label>
+                <input asp-for="cabaniaNueva.Numero" class="form-control" />
+                <span asp-validation-for="cabaniaNueva.Numero" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CantidadPersonas" class="control-label"></label>
-                <input asp-for="CantidadPersonas" class="form-control" />
-                <span asp-validation-for="CantidadPersonas" class="text-danger"></span>
+                <label asp-for="cabaniaNueva.CantidadPersonas" class="control-label"></label>
+                <input asp-for="cabaniaNueva.CantidadPersonas" class="form-control" />
+                <span asp-validation-for="cabaniaNueva.CantidadPersonas" class="text-danger"></span>
             </div>
 
             <div class="form-group">

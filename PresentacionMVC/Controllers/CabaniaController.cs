@@ -3,6 +3,7 @@ using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using PresentacionMVC.Models;
 
 namespace PresentacionMVC.Controllers
 {
@@ -40,18 +41,20 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController/Create
         public ActionResult Create()
         {
-            ViewBag.Tipos = ListadoTipoCabania.ObtenerListado();
-            return View();
+            AltaCabaniaViewModel vm = new AltaCabaniaViewModel();
+            vm.tiposCabania = ListadoTipoCabania.ObtenerListado();
+            return View(vm);
         }
 
         // POST: CabaniaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cabania cabania)
+        public ActionResult Create(AltaCabaniaViewModel VmAltaCabania)
         {
             try
             {
-                AltaCabania.Alta(cabania);
+                VmAltaCabania.cabaniaNueva.TipoCabaniaId = VmAltaCabania.idTipoCabania;
+                AltaCabania.Alta(VmAltaCabania.cabaniaNueva);
                 return RedirectToAction(nameof(Index));
             }
             catch
