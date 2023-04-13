@@ -24,7 +24,6 @@ namespace Datos.Repositorios
         public void Add( Cabania obj)
         {
             obj.Validar();
-            obj.SerializeNombreFoto(obj.Nombre);
             TipoCabania tipo = TipoCabania.FindById(obj.TipoCabaniaId);
             obj.TipoCabania = tipo;
             LibreriaContext.Cabania.Add(obj);
@@ -54,7 +53,11 @@ namespace Datos.Repositorios
 
         public void Update(Cabania obj)
         {
-            throw new NotImplementedException();
+            var hola = LibreriaContext.Cabania.Where(temas => temas.Habilitada);
+            hola.Where(temas => temas.Jacuzzi);
+
+            hola.ToList();
+
         }
 
     }

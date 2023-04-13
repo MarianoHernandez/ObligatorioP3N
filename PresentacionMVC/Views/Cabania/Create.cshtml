@@ -5,49 +5,55 @@
 }
 
 <h1>Create</h1>
-
+<p> @ViewBag.Mensaje</p>
 <h4>Cabania</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="cabaniaNueva.Nombre" class="control-label"></label>
-                <input asp-for="cabaniaNueva.Nombre" class="form-control" />
-                <span asp-validation-for="cabaniaNueva.Nombre" class="text-danger"></span>
+                <label asp-for="CabaniaNueva.Nombre" class="control-label"></label>
+                <input asp-for="CabaniaNueva.Nombre" class="form-control" />
+                <span asp-validation-for="CabaniaNueva.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="cabaniaNueva.Descripcion" class="control-label"></label>
-                <input asp-for="cabaniaNueva.Descripcion" class="form-control" />
-                <span asp-validation-for="cabaniaNueva.Descripcion" class="text-danger"></span>
+                <label asp-for="CabaniaNueva.Descripcion" class="control-label"></label>
+                <input asp-for="CabaniaNueva.Descripcion" class="form-control" />
+                <span asp-validation-for="CabaniaNueva.Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="idTipoCabania" class="control-label">Tipo Cabaña</label>
-                <select asp-for="idTipoCabania" asp-items="@(new SelectList(Model.tiposCabania, "Id", "Nombre"))" class="form-control">
+                <label asp-for="IdTipoCabania" class="control-label">Tipo Cabaña</label>
+                <select asp-for="IdTipoCabania" asp-items="@(new SelectList(Model.TiposCabania, "Id", "Nombre"))" class="form-control">
                     <option>Seleccione una opcion</option>
                 </select>
-                <span asp-validation-for="idTipoCabania" class="text-danger"></span>
+                <span asp-validation-for="IdTipoCabania" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="cabaniaNueva.Jacuzzi" /> @Html.DisplayNameFor(model => model.cabaniaNueva.Jacuzzi)
+                    <input class="form-check-input" asp-for="CabaniaNueva.Jacuzzi" /> @Html.DisplayNameFor(model => model.CabaniaNueva.Jacuzzi)
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="cabaniaNueva.Habilitada" /> @Html.DisplayNameFor(model => model.cabaniaNueva.Habilitada)
+                    <input class="form-check-input" asp-for="CabaniaNueva.Habilitada" /> @Html.DisplayNameFor(model => model.CabaniaNueva.Habilitada)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="cabaniaNueva.Numero" class="control-label"></label>
-                <input asp-for="cabaniaNueva.Numero" class="form-control" />
-                <span asp-validation-for="cabaniaNueva.Numero" class="text-danger"></span>
+                <label asp-for="CabaniaNueva.Numero" class="control-label"></label>
+                <input asp-for="CabaniaNueva.Numero" class="form-control" />
+                <span asp-validation-for="CabaniaNueva.Numero" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="cabaniaNueva.CantidadPersonas" class="control-label"></label>
-                <input asp-for="cabaniaNueva.CantidadPersonas" class="form-control" />
-                <span asp-validation-for="cabaniaNueva.CantidadPersonas" class="text-danger"></span>
+                <label asp-for="CabaniaNueva.CantidadPersonas" class="control-label"></label>
+                <input asp-for="CabaniaNueva.CantidadPersonas" class="form-control" />
+                <span asp-validation-for="CabaniaNueva.CantidadPersonas" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Foto" class="control-label"></label>
+                <input asp-for="Foto" class="form-control" />
+                <span asp-validation-for="Foto" class="text-danger"></span>
             </div>
 
             <div class="form-group">

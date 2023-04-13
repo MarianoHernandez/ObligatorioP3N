@@ -1,11 +1,13 @@
 ﻿using Negocio.Entidades;
+using System.ComponentModel.DataAnnotations;
 
 namespace PresentacionMVC.Models
 {
     public class AltaCabaniaViewModel
     { 
-        public Cabania cabaniaNueva { get; set; }
-        public IEnumerable<TipoCabania> tiposCabania { get; set; }
-        public int idTipoCabania { get;set; }
+        public Cabania CabaniaNueva { get; set; }
+        public IEnumerable<TipoCabania> TiposCabania { get; set; }
+        public int IdTipoCabania { get;set; }
+        public IFormFile Foto { get; set; }
     }
 }
