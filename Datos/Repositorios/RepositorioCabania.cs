@@ -38,12 +38,25 @@ namespace Datos.Repositorios
 
         public Cabania FindById(int id)
         {
+
             return LibreriaContext.Cabania.Include(cab => cab.TipoCabania).SingleOrDefault(cabania => cabania.Id == id);
         }
 
-        public IEnumerable<Cabania> FindCabaña(string nombre, TipoCabania tipo, int cantidadPers, bool habilitada)
+        public IEnumerable<Cabania> FindCabaña(string nombre, int tipoId, int cantidadPers, bool habilitada)
         {
-            throw new NotImplementedException();
+            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania);
+
+            if (nombre != null) {
+                lista.Where(cab => cab.Nombre == nombre);
+                return lista.ToList();
+            }if (tipoId != 0) {
+                lista.Where(cab => cab.TipoCabaniaId == tipoId);
+            }if (cantidadPers >= -1) { 
+                lista.Where(cab => cab.CantidadPersonas >= cantidadPers);
+            }if (habilitada) {
+                lista.Where(cab => cab.Habilitada == habilitada);
+            }
+            return lista.ToList();
         }
 
         public void Remove(int id)
@@ -53,10 +66,7 @@ namespace Datos.Repositorios
 
         public void Update(Cabania obj)
         {
-            var hola = LibreriaContext.Cabania.Where(temas => temas.Habilitada);
-            hola.Where(temas => temas.Jacuzzi);
 
-            hola.ToList();
 
         }
 

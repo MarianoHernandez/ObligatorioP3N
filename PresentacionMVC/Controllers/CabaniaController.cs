@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
-
+using NuGet.Protocol;
 using PresentacionMVC.Models;
 
 namespace PresentacionMVC.Controllers
@@ -18,14 +18,16 @@ namespace PresentacionMVC.Controllers
         IAltaCabania AltaCabania { get; set; }
         IListadoTipoCabania ListadoTipoCabania { get; set; }
         IListadoCabania ListadoCabania {get; set; }
+        IBusquedaConFiltros BusquedaConFiltros { get; set; }
         IWebHostEnvironment Env { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania,IWebHostEnvironment webHostEnvironment)
+        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
             ListadoCabania = listadoCabania;
             Env = webHostEnvironment;
+            BusquedaConFiltros = busquedaConFiltros;
         }
 
 
@@ -67,7 +69,7 @@ namespace PresentacionMVC.Controllers
                 string rutaArchivo = Path.Combine(rutaCarpeta, nomArchivo);
 
                 VmAltaCabania.CabaniaNueva.TipoCabaniaId = VmAltaCabania.IdTipoCabania;
-                VmAltaCabania.CabaniaNueva.Foto = rutaArchivo;
+                VmAltaCabania.CabaniaNueva.Foto = nomArchivo;
 
                 AltaCabania.Alta(VmAltaCabania.CabaniaNueva);
 
@@ -89,8 +91,8 @@ namespace PresentacionMVC.Controllers
 }
             catch
             {
-    ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
-    return View();
+                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                return View();
 }
         }
 
@@ -134,6 +136,36 @@ namespace PresentacionMVC.Controllers
             {
                 return View();
             }
+        }
+
+        // GET: CabaniaController/Delete/5
+        public ActionResult BusquedaFiltros()
+        {
+            BusquedaCabaniaViewModal BusquedaModal = new BusquedaCabaniaViewModal();
+            BusquedaModal.TiposCabania = ListadoTipoCabania.ObtenerListado();
+            return View(BusquedaModal);
+        }
+
+        // POST: CabaniaController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BusquedaFiltros(string Nombre, int TipoID, int CantidadPersonas, bool Habilitada)
+        {
+            try
+            {
+                return RedirectToAction(nameof(MostrerFiltradas), new { Nombre, TipoID, CantidadPersonas, Habilitada });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: CabaniaController/Delete/5
+        public ActionResult MostrerFiltradas(string Nombre, int TipoID, int CantidadPersonas, bool Habilitada)
+        {
+            IEnumerable<Cabania> filtradas = BusquedaConFiltros.GetCabanias(Nombre, TipoID, CantidadPersonas, Habilitada);
+            return View(filtradas);
         }
     }
 }
