@@ -24,13 +24,22 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 
+            #region Usuario
 
             builder.Services.AddScoped<ILoginUsuario, LoginUsuario>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
+
+            #endregion
+
+            #region Build Mantenimiento
+
+            builder.Services.AddScoped<IDeleteMantenimiento, DeleteMantenimiento>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
-            
-            
+
+            #endregion
+
+
             #region Build cabania
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
             #endregion
@@ -69,7 +78,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Cabania}/{action=Create}/{id?}");
+                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
 
 
             app.Run();
