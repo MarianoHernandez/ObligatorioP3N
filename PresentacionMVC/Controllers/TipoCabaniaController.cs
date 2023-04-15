@@ -129,7 +129,7 @@ namespace PresentacionMVC.Controllers
                 return View();
             }
 
-            catch (Exception ex)
+            catch
             {
                 ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
                 return View();
@@ -154,7 +154,7 @@ namespace PresentacionMVC.Controllers
             }
 
             
-            catch (Exception ex)
+            catch
             {
                 ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
                 return View();

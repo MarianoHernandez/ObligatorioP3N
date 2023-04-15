@@ -9,6 +9,6 @@ namespace Aplicacion.AplicacionesCabaña
 {
     public interface IListadoCabania
     {
-       IEnumerable<Cabania> ListadoCabanias();
+        public IEnumerable<Cabania> ListadoAllCabania();
     }
 }

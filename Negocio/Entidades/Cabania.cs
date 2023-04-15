@@ -18,7 +18,9 @@ namespace Negocio.Entidades
     {
 
         public int Id { get; set; }
+        
         public TipoCabania TipoCabania { get; set; }
+        public int TipoCabaniaId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public bool Jacuzzi { get; set; }

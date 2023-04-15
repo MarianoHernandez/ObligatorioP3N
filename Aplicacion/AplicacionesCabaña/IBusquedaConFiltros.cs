@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesCabaña
 {
-    public interface IAltaCabania
+    public interface IBusquedaConFiltros
     {
-        void Alta(Cabania cabania);
+        IEnumerable<Cabania> GetCabanias(string nombre, int tipo, int cantidadPers, bool habilitada);
     }
 }

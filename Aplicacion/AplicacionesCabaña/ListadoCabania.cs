@@ -11,16 +11,15 @@ namespace Aplicacion.AplicacionesCabaña
 {
     public class ListadoCabania : IListadoCabania
     {
-        IRepositorioCabania Repositorio;
-
-        public ListadoCabania(IRepositorioCabania repositorio)
+        public IRepositorioCabania RepositorioCabania { get; set; }
+        public ListadoCabania(IRepositorioCabania repositorioCabania)
         {
-            Repositorio = repositorio;
+            RepositorioCabania = repositorioCabania;
         }
 
-        public IEnumerable<Cabania> ListadoCabanias(string nombre, TipoCabania tipo, int cantidadPers, bool habilitada)
+        public IEnumerable<Cabania> ListadoAllCabania()
         {
-            return Repositorio.FindCabaña(nombre,tipo,cantidadPers,habilitada);
+            return RepositorioCabania.FindAll();
         }
     }
 }

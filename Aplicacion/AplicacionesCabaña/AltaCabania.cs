@@ -18,9 +18,9 @@ namespace Aplicacion.AplicacionesCabaña
         }
 
 
-        public void Alta(string nombreTipo, Cabania cabania)
+        public void Alta( Cabania cabania)
         {
-            Repo.Add(nombreTipo,cabania);
+            Repo.Add(cabania);
         }
     }
 }
