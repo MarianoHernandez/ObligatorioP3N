@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
+using Negocio.ExcepcionesPropias;
 using Negocio.InterfacesRepositorio;
 
 namespace Datos.Repositorios
@@ -39,8 +40,9 @@ namespace Datos.Repositorios
 
         public Cabania FindById(int id)
         {
-
-            return LibreriaContext.Cabania.Include(cab => cab.TipoCabania).SingleOrDefault(cabania => cabania.Id == id);
+            
+            Cabania encontrada = LibreriaContext.Cabania.Include(cab => cab.TipoCabania).SingleOrDefault(cabania => cabania.Id == id);
+            return encontrada == null ? throw new NoEncontradoException("No se encontro la Cabaña ingresada") : encontrada;
         }
 
         public IEnumerable<Cabania> FindCabaña(string nombre, int tipoId, int cantidadPers, bool habilitada)
