@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesCabaña
 {
-    internal interface IFindByIdCabania
+    public interface IFindByIdCabania
     {
+        public Cabania FindById(int id);
     }
 }
