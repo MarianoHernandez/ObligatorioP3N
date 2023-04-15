@@ -21,7 +21,10 @@ namespace Aplicacion.AplicacionesMantenimientos
 
         public void Alta(Mantenimiento mantenimiento)
         {
-            Repo.Add(mantenimiento);
+            if (mantenimiento.Id < 4)
+            {
+                Repo.Add(mantenimiento);
+            }
         }
     }
 }
