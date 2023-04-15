@@ -33,12 +33,12 @@ namespace PresentacionMVC.Controllers
         {
             //IEnumerable<Mantenimiento> mantenimiento = ListadoMantenimiento.ObtenerListado();
             return View(ListadoMantenimiento.ListadoAllMantenimientos());
-        } 
+        }
 
         // GET: ManteniminetoController/Details/5
         public ActionResult Details(int id)
         {
-       
+
             return View();
         }
 
@@ -55,11 +55,14 @@ namespace PresentacionMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(AltaMantenimientoViewModel VmMantenimiento)
         {
+
             try
             {
+
                 VmMantenimiento.MantenimientoNuevo.CabaniaId = VmMantenimiento.IdCabania;
                 AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
                 return RedirectToAction(nameof(Index));
+
             }
             catch (Exception ex)
             {
@@ -105,7 +108,7 @@ namespace PresentacionMVC.Controllers
                 DeleteMantenimiento.DeleteMantenimiento(mantenimiento);
                 return RedirectToAction(nameof(Index));
             }
-            catch(NoEncontradoException ex)
+            catch (NoEncontradoException ex)
             {
                 ViewBag.Mensaje = ex.Message;
                 return View();

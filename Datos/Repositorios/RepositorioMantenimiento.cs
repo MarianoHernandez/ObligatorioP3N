@@ -24,6 +24,9 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
+            Cabania cab = Cabania.FindById(obj.CabaniaId);
+            obj.cabania = cab;
+
             obj.Validar();
             Contexto.Mantenimiento.Add(obj);
             Contexto.SaveChanges();
