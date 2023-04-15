@@ -9,6 +9,6 @@ namespace Aplicacion.AplicacionesMantenimientos
 {
     public interface IListadoMantenimiento
     {
-        IEnumerable<Mantenimiento> ObtenerListado();
+        public IEnumerable<Mantenimiento> ListadoAllMantenimientos();
     }
 }

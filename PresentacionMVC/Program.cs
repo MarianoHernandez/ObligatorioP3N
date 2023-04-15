@@ -36,6 +36,8 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IDeleteMantenimiento, DeleteMantenimiento>();
             builder.Services.AddScoped<IAltaMantenimiento, AltaMantenimiento>();
             builder.Services.AddScoped<IListadoMantenimiento, ListadoMantenimiento>();
+            builder.Services.AddScoped<IDeleteMantenimiento, DeleteMantenimiento>();
+            builder.Services.AddScoped<IFindByDate, FindByDate>();
 
             #endregion
 

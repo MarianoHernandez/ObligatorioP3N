@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
+using PresentacionMVC.Models;
+using System.Net.WebSockets;
 
 namespace PresentacionMVC.Controllers
 {
@@ -12,43 +14,47 @@ namespace PresentacionMVC.Controllers
         IAltaMantenimiento AltaMantenimiento { get; set; }
         IListadoMantenimiento ListadoMantenimiento { get; set; }
         IDeleteMantenimiento DeleteMantenimiento { get; set; }
+        IWebHostEnvironment Env { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento, IWebHostEnvironment webHostEnvironment)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
             DeleteMantenimiento = deleteMantenimiento;
+            Env = webHostEnvironment;
         }
 
         // GET: ManteniminetoController
         public ActionResult Index()
         {
-            IEnumerable<Mantenimiento> mantenimiento = ListadoMantenimiento.ObtenerListado();
-            return View(mantenimiento);
-        }
+            //IEnumerable<Mantenimiento> mantenimiento = ListadoMantenimiento.ObtenerListado();
+            return View(ListadoMantenimiento.ListadoAllMantenimientos());
+        } 
 
         // GET: ManteniminetoController/Details/5
         public ActionResult Details(int id)
         {
+       
             return View();
         }
 
         // GET: ManteniminetoController/Create
         public ActionResult Create()
         {
-      
-            return View();
+            AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
+            vm.mantenimiento = ListadoMantenimiento.ListadoAllMantenimientos();
+            return View(vm);
         }
 
         // POST: ManteniminetoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Mantenimiento mantenimiento)
+        public ActionResult Create(AltaMantenimientoViewModel VmMantenimiento)
         {
             try
             {
-                mantenimiento.Validar();
-                AltaMantenimiento.Alta(mantenimiento);
+                VmMantenimiento.MantenimientoNuevo.Id = VmMantenimiento.IdMantenimiento;
+                AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

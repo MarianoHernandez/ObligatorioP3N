@@ -21,5 +21,10 @@ namespace Aplicacion.AplicacionesMantenimientos
         {
             return Repo.FindAll();
         }
+
+        public IEnumerable<Mantenimiento> ListadoAllMantenimientos()
+        {
+            return Repo.FindAll();
+        }
     }
 }
