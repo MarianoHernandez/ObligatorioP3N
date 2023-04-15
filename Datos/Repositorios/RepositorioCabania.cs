@@ -32,8 +32,9 @@ namespace Datos.Repositorios
 
         public IEnumerable<Cabania> FindAll()
         {
-            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania).ToList();
-            return lista;
+            IEnumerable<Cabania> cabanias = LibreriaContext.Cabania.Include(o => o.TipoCabania).ToList();
+
+            return cabanias;
         }
 
         public Cabania FindById(int id)
@@ -47,14 +48,13 @@ namespace Datos.Repositorios
             IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania);
 
             if (nombre != null) {
-                lista.Where(cab => cab.Nombre == nombre);
-                return lista.ToList();
+                lista = lista.Where(cab => cab.Nombre == nombre);
             }if (tipoId != 0) {
-                lista.Where(cab => cab.TipoCabaniaId == tipoId);
-            }if (cantidadPers >= -1) { 
-                lista.Where(cab => cab.CantidadPersonas >= cantidadPers);
+                lista = lista.Where(cab => cab.TipoCabaniaId == tipoId);
+            }if (cantidadPers > 0) { 
+                lista = lista.Where(cab => cab.CantidadPersonas >= cantidadPers);
             }if (habilitada) {
-                lista.Where(cab => cab.Habilitada == habilitada);
+                lista = lista.Where(cab => cab.Habilitada == habilitada);
             }
             return lista.ToList();
         }
@@ -66,7 +66,7 @@ namespace Datos.Repositorios
 
         public void Update(Cabania obj)
         {
-
+            throw new NotImplementedException();
 
         }
 

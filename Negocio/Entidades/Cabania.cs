@@ -43,16 +43,7 @@ namespace Negocio.Entidades
         public void Validar()
         {
             #region Validar Nombre
-            string pattern = @"(?<=\s)[A-Za-z ]+(?=\s)";
-
-            // Crea una instancia de Regex
-            Regex regex = new Regex(pattern);
-
-            // Busca coincidencias en la cadena de entrada
-            Match match = regex.Match(Nombre);
-
-            // Muestra los resultados
-            if (match.Success)
+            if (!Regex.IsMatch(Nombre, "^[a-zA-Z]+( [a-zA-Z]+)*$"))
             {
                 throw new NombreInvalidoException("El nombre solo incluye caracteres alfabéticos y espacios embebidos, pero no al principio ni final");
             }
