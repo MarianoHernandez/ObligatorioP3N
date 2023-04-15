@@ -82,18 +82,18 @@ namespace PresentacionMVC.Controllers
             catch (NombreInvalidoException ex)
             {
                 ViewBag.Mensaje = ex.Message;
-                return View();
-    }
+                return RedirectToAction(nameof(Index));
+            }
             catch (DescripcionInvalidaException ex)
             {
                 ViewBag.Mensaje = ex.Message;
-                return View();
-}
+                return RedirectToAction(nameof(Index));
+            }
             catch
             {
                 ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
-                return View();
-}
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: CabaniaController/Edit/5
