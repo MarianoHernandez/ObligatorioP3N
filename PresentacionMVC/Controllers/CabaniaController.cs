@@ -34,7 +34,7 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController
         public ActionResult Index()
         {
-            IEnumerable<Cabania> cabanias = ListadoCabania.ListadoCabanias();
+            IEnumerable<Cabania> cabanias = ListadoCabania.ListadoAllCabania();
             return View(cabanias);
         }
 

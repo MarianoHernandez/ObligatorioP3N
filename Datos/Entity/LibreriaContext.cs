@@ -8,7 +8,7 @@ namespace Datos.Entity
     {
         public DbSet<Cabania> Cabania { get; set; }
         public DbSet<TipoCabania> TipoCabania { get; set; }
-        public DbSet<Usuario>   Usuario { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
 
         public LibreriaContext(DbContextOptions<LibreriaContext> options) : base(options)
