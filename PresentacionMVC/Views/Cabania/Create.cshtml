@@ -6,6 +6,13 @@
 
 <h1>Create</h1>
 
+@if (@ViewBag.MensajeError != null)
+{
+    <p> @ViewBag.MensajeError</p>
+    
+}
+else
+{
 <h4>Cabania</h4>
 <hr />
 <div class="row">
@@ -62,4 +69,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 }

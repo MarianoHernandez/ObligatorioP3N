@@ -3,6 +3,8 @@ using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using Negocio.ExcepcionesPropias.Cabanias;
+using Negocio.ExcepcionesPropias;
 
 namespace PresentacionMVC.Controllers
 {
@@ -13,17 +15,20 @@ namespace PresentacionMVC.Controllers
     {
         IAltaCabania AltaCabania { get; set; }
         IListadoTipoCabania ListadoTipoCabania { get; set; }
+        IListadoCabania ListadoCabania { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania) {
+        public CabaniaController(IAltaCabania altaCabania, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania) {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
+            ListadoCabania = listadoCabania;
         }
 
 
         // GET: CabaniaController
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Cabania> cabanias = ListadoCabania.ListadoCabanias();
+            return View(cabanias);
         }
 
         // GET: CabaniaController/Details/5
@@ -47,11 +52,23 @@ namespace PresentacionMVC.Controllers
             try
             {
                 AltaCabania.Alta(TipoCabania,cabania);
+                ViewBag.MensajeOk = "Crado con exito";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NombreInvalidoException ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DescripcionInvalidaException ex)
+            {
+                ViewBag.MensajeError = ex.Message;
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ViewBag.MensajeError = "Oops! Ocurrió un error inesperado";
+                return RedirectToAction(nameof(Index));
             }
         }
 

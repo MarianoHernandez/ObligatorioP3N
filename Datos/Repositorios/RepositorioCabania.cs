@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Datos.Entity;
+using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
 using Negocio.InterfacesRepositorio;
 
@@ -32,7 +33,9 @@ namespace Datos.Repositorios
 
         public IEnumerable<Cabania> FindAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Cabania> cabanias = LibreriaContext.Cabania.Include(o => o.TipoCabania).ToList();
+
+            return cabanias;
         }
 
         public Cabania FindById(int id)
