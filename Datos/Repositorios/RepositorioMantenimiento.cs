@@ -24,6 +24,7 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
+
             obj.Validar();
             Contexto.Mantenimiento.Add(obj);
             Contexto.SaveChanges();
