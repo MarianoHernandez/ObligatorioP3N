@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 
-    <p> @ViewBag.MensajeError</p>
+    <p> @ViewBag.Mensaje</p>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -32,9 +32,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Habilitada)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Numero)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.CantidadPersonas)
             </th>
@@ -65,9 +63,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Habilitada)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.CantidadPersonas)
             </td>

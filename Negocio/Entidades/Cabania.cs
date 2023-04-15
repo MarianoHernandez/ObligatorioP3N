@@ -11,12 +11,14 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using Negocio.ExcepcionesPropias.Cabanias;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace Negocio.Entidades
 {
     public class Cabania : IValidable
     {
-
+        [DisplayName("Numero Habitacion")]
         public int Id { get; set; }
         
         public TipoCabania TipoCabania { get; set; }
@@ -25,7 +27,6 @@ namespace Negocio.Entidades
         public string Descripcion { get; set; }
         public bool Jacuzzi { get; set; }
         public bool Habilitada { get; set; }
-        public int Numero { get; set; }
         public int CantidadPersonas { get; set; }
         public string Foto { get; set; }
         private static int NumeroFoto { get; set; } = 1;
