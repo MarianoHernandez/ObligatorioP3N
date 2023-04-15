@@ -34,11 +34,7 @@ namespace Datos.Repositorios
         public TipoCabania FindByName(string nombre)
         {
             TipoCabania tipo = LibreriaContext.TipoCabania.SingleOrDefault(tipo => tipo.Nombre == nombre);
-            if (tipo == null)
-            {
-                throw new NoEncontradoException("No se encontro el Tipo de Cabania");
-            }
-            return tipo;
+            return tipo == null ? throw new NoEncontradoException("No se encontro el Tipo de Cabania") : tipo;
         }
 
         public void Remove(TipoCabania tipo)
@@ -51,13 +47,14 @@ namespace Datos.Repositorios
             LibreriaContext.TipoCabania.Update(obj);
             LibreriaContext.SaveChanges();
         }
-
-        #region Not Implemented
-
         public TipoCabania FindById(int id)
         {
-            throw new NotImplementedException();
+
+            return LibreriaContext.TipoCabania.Find(id);
         }
+        #region Not Implemented
+
+
         public void Remove(int id)
         {
             throw new NotImplementedException();

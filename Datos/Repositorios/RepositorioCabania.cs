@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Datos.Entity;
+using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
 using Negocio.InterfacesRepositorio;
 
@@ -20,11 +21,10 @@ namespace Datos.Repositorios
             TipoCabania = tipoCabania;
         }
 
-        public void Add(string nombreTipo, Cabania obj)
+        public void Add( Cabania obj)
         {
             obj.Validar();
-            obj.SerializeNombreFoto(obj.Nombre);
-            TipoCabania tipo = TipoCabania.FindByName(nombreTipo);
+            TipoCabania tipo = TipoCabania.FindById(obj.TipoCabaniaId);
             obj.TipoCabania = tipo;
             LibreriaContext.Cabania.Add(obj);
             LibreriaContext.SaveChanges();
@@ -32,17 +32,31 @@ namespace Datos.Repositorios
 
         public IEnumerable<Cabania> FindAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania).ToList();
+            return lista;
         }
 
         public Cabania FindById(int id)
         {
-            throw new NotImplementedException();
+
+            return LibreriaContext.Cabania.Include(cab => cab.TipoCabania).SingleOrDefault(cabania => cabania.Id == id);
         }
 
-        public IEnumerable<Cabania> FindCabaña(string nombre, TipoCabania tipo, int cantidadPers, bool habilitada)
+        public IEnumerable<Cabania> FindCabaña(string nombre, int tipoId, int cantidadPers, bool habilitada)
         {
-            throw new NotImplementedException();
+            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania);
+
+            if (nombre != null) {
+                lista.Where(cab => cab.Nombre == nombre);
+                return lista.ToList();
+            }if (tipoId != 0) {
+                lista.Where(cab => cab.TipoCabaniaId == tipoId);
+            }if (cantidadPers >= -1) { 
+                lista.Where(cab => cab.CantidadPersonas >= cantidadPers);
+            }if (habilitada) {
+                lista.Where(cab => cab.Habilitada == habilitada);
+            }
+            return lista.ToList();
         }
 
         public void Remove(int id)
@@ -52,12 +66,9 @@ namespace Datos.Repositorios
 
         public void Update(Cabania obj)
         {
-            throw new NotImplementedException();
+
+
         }
 
-        public void Add(Cabania obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

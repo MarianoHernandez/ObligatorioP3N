@@ -42,9 +42,13 @@ namespace PresentacionMVC
 
             #region Build cabania
             builder.Services.AddScoped<IAltaCabania, AltaCabania>();
+            builder.Services.AddScoped<IListadoCabania,ListadoCabania>();
+            builder.Services.AddScoped<IFindById, FindById>();
+            builder.Services.AddScoped<IBusquedaConFiltros, BusquedaConFiltros>();
+
             #endregion
-            
-            
+
+
             #region Build TipoCabania
             builder.Services.AddScoped<IAltaTipoCabania, AltaTipoCabania>();
             builder.Services.AddScoped<IListadoTipoCabania, ListadoTipoCabania>();
