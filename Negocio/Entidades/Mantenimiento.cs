@@ -14,7 +14,8 @@ namespace Negocio.Entidades
         public string? descripcion { get; set; }
         public decimal costo { get; set; }
         public string? trabajador { get; set; }
-        public Cabania? cabania { get; set; }
+        public Cabania cabania { get; set; }
+        public int CabaniaId { get; set; }
         public int Id { get; set; }
 
 

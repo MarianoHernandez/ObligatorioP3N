@@ -5,7 +5,8 @@ namespace PresentacionMVC.Models
     public class AltaMantenimientoViewModel
     {
         public Mantenimiento MantenimientoNuevo { get; set; }
-        public IEnumerable<Mantenimiento> mantenimiento { get; set; }
-        public int IdMantenimiento { get; set; }
+        public IEnumerable<Cabania> cabanias { get; set; }
+
+        public int IdCabania { get; set; }
     }
 }

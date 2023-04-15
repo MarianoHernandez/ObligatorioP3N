@@ -15,10 +15,11 @@ namespace Datos.Repositorios
     {
 
         public LibreriaContext Contexto { get; set; }
-
-        public RepositorioMantenimiento(LibreriaContext ctx)
+        public IRepositorioCabania Cabania { get; set; }
+        public RepositorioMantenimiento(LibreriaContext ctx, IRepositorioCabania cabania)
         {
             Contexto = ctx;
+            Cabania = cabania;
         }
 
         public void Add(Mantenimiento obj)
@@ -26,6 +27,7 @@ namespace Datos.Repositorios
             obj.Validar();
             Contexto.Mantenimiento.Add(obj);
             Contexto.SaveChanges();
+            
         }
 
         public Mantenimiento FindByDate(DateTime d1, DateTime d2)
@@ -35,8 +37,9 @@ namespace Datos.Repositorios
         }
 
         public IEnumerable<Mantenimiento> FindAll()
-        {
-            return Contexto.Mantenimiento.ToList();
+        {            
+            IEnumerable<Mantenimiento> mantenimiento = Contexto.Mantenimiento.ToList();
+            return mantenimiento;
         }
         public void Remove(Mantenimiento mantenimiento)
         {

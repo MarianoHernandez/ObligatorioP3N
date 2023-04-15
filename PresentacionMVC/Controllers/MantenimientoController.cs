@@ -1,4 +1,5 @@
-﻿using Aplicacion.AplicacionesMantenimientos;
+﻿using Aplicacion.AplicacionesCabaña;
+using Aplicacion.AplicacionesMantenimientos;
 using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,17 @@ namespace PresentacionMVC.Controllers
         IAltaMantenimiento AltaMantenimiento { get; set; }
         IListadoMantenimiento ListadoMantenimiento { get; set; }
         IDeleteMantenimiento DeleteMantenimiento { get; set; }
+        IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento, IWebHostEnvironment webHostEnvironment)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento, IWebHostEnvironment webHostEnvironment,
+            IListadoCabania listadoCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
             DeleteMantenimiento = deleteMantenimiento;
             Env = webHostEnvironment;
+            ListadoCabania = listadoCabania;
         }
 
         // GET: ManteniminetoController
@@ -42,7 +46,7 @@ namespace PresentacionMVC.Controllers
         public ActionResult Create()
         {
             AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
-            vm.mantenimiento = ListadoMantenimiento.ListadoAllMantenimientos();
+            vm.cabanias = ListadoCabania.ListadoAllCabania();
             return View(vm);
         }
 
@@ -53,7 +57,7 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
-                VmMantenimiento.MantenimientoNuevo.Id = VmMantenimiento.IdMantenimiento;
+                VmMantenimiento.MantenimientoNuevo.CabaniaId = VmMantenimiento.IdCabania;
                 AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
                 return RedirectToAction(nameof(Index));
             }
