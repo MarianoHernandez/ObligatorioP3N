@@ -75,7 +75,7 @@ namespace PresentacionMVC.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return RedirectToAction(nameof(Index));
             }
         }

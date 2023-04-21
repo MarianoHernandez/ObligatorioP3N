@@ -2,11 +2,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
 <h1>Listado de mantenimientos</h1>
-<div>
-    <p> @ViewBag.mensaje </p>
-</div>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
