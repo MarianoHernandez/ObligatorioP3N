@@ -59,6 +59,8 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                VmAltaCabania.CabaniaNueva.Validar();
+
                 string rutaWwwRoot = Env.WebRootPath;
                 string rutaCarpeta = Path.Combine(rutaWwwRoot, "Imagenes");
 
@@ -70,6 +72,8 @@ namespace PresentacionMVC.Controllers
 
                 VmAltaCabania.CabaniaNueva.TipoCabaniaId = VmAltaCabania.IdTipoCabania;
                 VmAltaCabania.CabaniaNueva.Foto = nomArchivo;
+
+               
 
                 AltaCabania.Alta(VmAltaCabania.CabaniaNueva);
 

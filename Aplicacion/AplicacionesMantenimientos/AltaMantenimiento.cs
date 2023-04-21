@@ -1,4 +1,5 @@
 ﻿using Negocio.Entidades;
+using Negocio.ExcepcionesPropias;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace Aplicacion.AplicacionesMantenimientos
 
         public void Alta(Mantenimiento mantenimiento)
         {
-            if (mantenimiento.Id < 4)
-            {
-                Repo.Add(mantenimiento);
-            }
+
+            Repo.Add(mantenimiento);
+
+
         }
     }
 }

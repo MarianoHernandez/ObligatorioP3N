@@ -60,14 +60,23 @@ namespace PresentacionMVC.Controllers
             {
 
                 VmMantenimiento.MantenimientoNuevo.CabaniaId = VmMantenimiento.IdCabania;
-                AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
+
+
+                //if (VmMantenimiento.MantenimientoNuevo.fecha.Day <= 3)
+                //{
+                    AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
+                //}
+                //else
+                //{
+                //    throw new MantenimientoInvalidoException("No se puede hacer mas de 3 mantenimientos por dia");
+                //}
                 return RedirectToAction(nameof(Index));
 
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = "Ocurrio un error";
-                return View();
+                ViewBag.Mensaje = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
