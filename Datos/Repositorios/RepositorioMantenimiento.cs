@@ -8,6 +8,8 @@ using Datos.Entity;
 using Negocio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Negocio.ExcepcionesPropias;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections;
 
 namespace Datos.Repositorios
 {
@@ -33,10 +35,12 @@ namespace Datos.Repositorios
             
         }
 
-        public Mantenimiento FindByDate(DateTime d1, DateTime d2)
+        public IEnumerable<Mantenimiento> FindByDateMantenimiento(DateTime d1, DateTime d2)
         {
-            throw new NotImplementedException();
-
+            IEnumerable<Mantenimiento> mantenimientos = Contexto.Mantenimiento
+                .Where(fec => fec.fecha.Date > d1 && fec.fecha.Date < d2)
+                .ToList();
+            return mantenimientos;
         }
 
         public IEnumerable<Mantenimiento> FindAll()
@@ -65,6 +69,15 @@ namespace Datos.Repositorios
             return Contexto.Mantenimiento.Find(id);
         }
 
+        public IEnumerable<Mantenimiento> FindMantenimiento(DateTime Fecha1, DateTime Fecha2)
+        {
+            IEnumerable<Mantenimiento> lista = Contexto.Mantenimiento
+                .Include(o => o.cabania)
+                .Where(man => man.fecha > Fecha1 && man.fecha < Fecha2)
+                .ToList();
+
+            return lista;
+        }
         void IRepositorio<Mantenimiento>.Remove(int id)
         {
             throw new NotImplementedException();

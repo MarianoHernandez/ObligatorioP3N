@@ -88,7 +88,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
+                pattern: "{controller=Usuario}/{action=Login}/{id?}");
 
 
             app.Run();

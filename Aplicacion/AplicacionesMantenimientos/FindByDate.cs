@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesMantenimientos
 {
-    //public class FindByDate : IFindByDate
-    //{
-    //    public IRepositorioMantenimiento Repo { get; set; }
+    public class FindByDate : IFindByDate
+    {
+        public IRepositorioMantenimiento Repo { get; set; }
 
-    //    public FindByDate(IRepositorioMantenimiento repo)
-    //    {
-    //        Repo = repo;
-    //    }
-        //public IEnumerable<Mantenimiento> FindMantenimiento(DateTime d1, DateTime d2)
-        //{
-        //    return Repo.FindByDate(d1, d2);
-        //}
-//    }
+        public FindByDate(IRepositorioMantenimiento repo)
+        {
+            Repo = repo;
+        }
+        public IEnumerable<Mantenimiento> FindByDateMantenimiento(DateTime d1, DateTime d2)
+        {
+            return Repo.FindMantenimiento(d1, d2);
+        }
+    }
 }
