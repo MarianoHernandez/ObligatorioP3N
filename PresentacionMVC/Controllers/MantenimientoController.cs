@@ -110,11 +110,11 @@ namespace PresentacionMVC.Controllers
             return View(BusquedaModal);
         }
         [HttpPost]
-        public ActionResult FindByDate(DateTime d1, DateTime d2)
+        public ActionResult FindByDate(DateTime fecha1, DateTime fecha2)
         {
             try
             {
-                return RedirectToAction(nameof(MostrarMantenimientoFiltrado), new { d1, d2 });
+                return RedirectToAction(nameof(MostrarMantenimientoFiltrado), new { fecha1, fecha2 });
             }
             catch
             {

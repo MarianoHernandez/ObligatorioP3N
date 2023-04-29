@@ -26,13 +26,23 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
+            IEnumerable<Mantenimiento> mantenimientos = Contexto.Mantenimiento
+                .Where(man => man.CabaniaId == obj.CabaniaId && man.fecha.DayOfYear == obj.fecha.DayOfYear)
+                .ToList();
+
+            if(mantenimientos.Count() >= 3)
+            {
+                throw new MantenimientoInvalidoException("Mantenimiento invalido, no se puede crear mas de 3 por dia en la misma cabaña");
+            }
+            
             Cabania cab = Cabania.FindById(obj.CabaniaId);
             obj.cabania = cab;
+
 
             obj.Validar();
             Contexto.Mantenimiento.Add(obj);
             Contexto.SaveChanges();
-            
+
         }
 
         public IEnumerable<Mantenimiento> FindByDateMantenimiento(DateTime d1, DateTime d2)
@@ -44,7 +54,7 @@ namespace Datos.Repositorios
         }
 
         public IEnumerable<Mantenimiento> FindAll()
-        {            
+        {
             IEnumerable<Mantenimiento> mantenimiento = Contexto.Mantenimiento
                 .Include(man => man.cabania)
                 .ThenInclude(cab => cab.TipoCabania)

@@ -26,7 +26,7 @@ namespace Negocio.Entidades
             {
                 throw new CaracteresDentroDeRango("La cantidad de caracteres debe de ser entre 10 y 200");
             }
-            if (fecha == DateTime.MinValue)
+            if (fecha == null)
             {
                 throw new CampoVacioException("El campo no puede estar vacio");
             }
@@ -37,16 +37,6 @@ namespace Negocio.Entidades
             if (cabania == null)
             {
                 throw new CampoVacioException("El campo no puede estar vacio");
-            }
-
-            if (cabania.Id == Id)
-            {
-                if (Id > 3 && fecha == DateTime.Now)
-                {
-                    throw new MantenimientoInvalidoException("La Cabaña no puede tener mas de 3 mantenimientos en el dia");
-
-                }
-
             }
 
             #endregion
