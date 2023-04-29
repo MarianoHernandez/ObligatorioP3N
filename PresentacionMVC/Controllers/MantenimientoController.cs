@@ -4,6 +4,7 @@ using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Hosting;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
 using PresentacionMVC.Models;
@@ -18,15 +19,17 @@ namespace PresentacionMVC.Controllers
         IListadoMantenimiento ListadoMantenimiento { get; set; }
         IDeleteMantenimiento DeleteMantenimiento { get; set; }
 
+        IFindByDate FindByDates { get; set; }
         IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento
-           , IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento,
+            IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
             DeleteMantenimiento = deleteMantenimiento;
+            FindByDates = findByDates;
             Env = webHostEnvironment;
             ListadoCabania = listadoCabania;
         }
@@ -99,6 +102,30 @@ namespace PresentacionMVC.Controllers
         public ActionResult FindById()
         {
             return View();
+        }
+
+        public ActionResult FindByDate()
+        {
+            BusquedaMantenimientoModel BusquedaModal = new BusquedaMantenimientoModel();
+            return View(BusquedaModal);
+        }
+        [HttpPost]
+        public ActionResult FindByDate(DateTime d1, DateTime d2)
+        {
+            try
+            {
+                return RedirectToAction(nameof(MostrarMantenimientoFiltrado), new { d1, d2 });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult MostrarMantenimientoFiltrado(DateTime Fecha1, DateTime Fecha2)
+        {
+            IEnumerable<Mantenimiento> filtrados = FindByDates.FindByDateMantenimiento(Fecha1, Fecha2);
+            return View(filtrados);
         }
 
         // GET: ManteniminetoController/Delete/5

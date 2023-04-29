@@ -9,7 +9,7 @@ namespace Negocio.InterfacesRepositorio
 {
     public interface IRepositorioMantenimiento : IRepositorio<Mantenimiento>
     {
-        public Mantenimiento FindByDate(DateTime d1, DateTime d2);
+        public IEnumerable<Mantenimiento> FindMantenimiento(DateTime d1, DateTime d2);
         public void Remove(Mantenimiento mantenimiento);
     }
 }
