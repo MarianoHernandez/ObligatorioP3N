@@ -8,6 +8,8 @@ using Negocio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Datos.Entity;
 using Negocio.ExcepcionesPropias;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace Datos.Repositorios
 {
@@ -46,10 +48,6 @@ namespace Datos.Repositorios
             throw new NotImplementedException();
         }
 
-        public void GetUsuario(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
         public Usuario Login(Usuario usuario)
         {
             
@@ -66,6 +64,13 @@ namespace Datos.Repositorios
         public void Logout()
         {
             throw new NotImplementedException();
+        }
+
+        public void ValidarSession(string email) {
+
+            if (email==null) {
+                throw new LoginIncorrectoException("Se necesita iniciar sesion");
+            }
         }
     }
 }

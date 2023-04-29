@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesUsuario
 {
-    public interface ILogoutUsuario
+    public interface IValidarSession
     {
-        public void Logout();
+        public void Validar(string email);
     }
 }

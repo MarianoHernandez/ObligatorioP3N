@@ -15,7 +15,6 @@ namespace PresentacionMVC.Controllers
 
         IAltaUsuario AltaUsuario { get; set; }
         ILoginUsuario LoginUsuario { get; set; }
-        IRepositorioUsuario repo { get; set; }
         public UsuarioController(IAltaUsuario altaUsuario, ILoginUsuario loginUsuario)
         {
             AltaUsuario = altaUsuario;
@@ -29,6 +28,16 @@ namespace PresentacionMVC.Controllers
             
             return View();
 
+        }
+        public IActionResult Logout()
+        {
+            if (HttpContext.Session.GetString("user") != null)
+            {
+                HttpContext.Session.Clear();
+            }
+            TempData["Bien"] = "Logout";
+
+            return RedirectToAction("Login", "Usuario");
         }
 
         public IActionResult Login()

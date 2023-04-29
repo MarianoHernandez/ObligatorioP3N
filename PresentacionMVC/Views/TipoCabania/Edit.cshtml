@@ -4,6 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 
+@if (TempData["Bien"] != null)
+{
+    <div class="alert alert-success p-3"> @TempData["Bien"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
 <h1>Edit</h1>
 
 <h4>TipoCabania</h4>

@@ -4,13 +4,16 @@
     ViewData["Title"] = "Login";
 }
 
+@if (TempData["Bien"] != null)
+{
+    <div class="alert alert-success p-3"> @TempData["Bien"]</div>
+}
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
 <h1>Login</h1>
-<p> @ViewBag.Mensaje</p>
 <h4>Usuario</h4>
 <hr />
 <div class="row">

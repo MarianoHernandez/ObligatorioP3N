@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionesUsuario
 {
-    public class LogoutUsuario : ILogoutUsuario
+    public class ValidarSession:IValidarSession
     {
         public IRepositorioUsuario Repo { get; set; }
-        public LogoutUsuario (IRepositorioUsuario repo)
+        public ValidarSession(IRepositorioUsuario repo)
         {
             Repo = repo;
         }
-
-        public void Logout()
-        {
-            Repo.Logout();
+        public void Validar(string email) {
+            Repo.ValidarSession(email);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace PresentacionMVC
 
             builder.Services.AddScoped<ILoginUsuario, LoginUsuario>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuario>();
+            builder.Services.AddScoped<IValidarSession, ValidarSession>();
+
 
             #endregion
 
@@ -88,7 +90,7 @@ namespace PresentacionMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Mantenimiento}/{action=Create}/{id?}");
+                pattern: "{controller=Usuario}/{action=Login}/{id?}");
 
 
             app.Run();

@@ -1,5 +1,6 @@
 ﻿using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesTipoCabaña;
+using Aplicacion.AplicacionesUsuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
@@ -17,25 +18,42 @@ namespace PresentacionMVC.Controllers
     {
         IAltaCabania AltaCabania { get; set; }
         IListadoTipoCabania ListadoTipoCabania { get; set; }
-        IListadoCabania ListadoCabania {get; set; }
+        IListadoCabania ListadoCabania { get; set; }
         IBusquedaConFiltros BusquedaConFiltros { get; set; }
         IWebHostEnvironment Env { get; set; }
+        IValidarSession ValidarLogin { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
             ListadoCabania = listadoCabania;
             Env = webHostEnvironment;
             BusquedaConFiltros = busquedaConFiltros;
+            ValidarLogin = validarSession;
         }
 
 
         // GET: CabaniaController
         public ActionResult Index()
         {
-            IEnumerable<Cabania> cabanias = ListadoCabania.ListadoAllCabania();
-            return View(cabanias);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                IEnumerable<Cabania> cabanias = ListadoCabania.ListadoAllCabania();
+                return View(cabanias);
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // GET: CabaniaController/Details/5
@@ -47,9 +65,25 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController/Create
         public ActionResult Create()
         {
-            AltaCabaniaViewModel vm = new AltaCabaniaViewModel();
-            vm.TiposCabania = ListadoTipoCabania.ObtenerListado();
-            return View(vm);
+
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                AltaCabaniaViewModel vm = new AltaCabaniaViewModel();
+                vm.TiposCabania = ListadoTipoCabania.ObtenerListado();
+                return View(vm);
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // POST: CabaniaController/Create
@@ -73,29 +107,29 @@ namespace PresentacionMVC.Controllers
                 VmAltaCabania.CabaniaNueva.TipoCabaniaId = VmAltaCabania.IdTipoCabania;
                 VmAltaCabania.CabaniaNueva.Foto = nomArchivo;
 
-               
+
 
                 AltaCabania.Alta(VmAltaCabania.CabaniaNueva);
 
                 FileStream fs = new FileStream(rutaArchivo, FileMode.Create);
                 VmAltaCabania.Foto.CopyTo(fs);
-
+                TempData["Bien"] = "Se creo la cabaña correctamente";
                 return RedirectToAction(nameof(Index));
             }
 
             catch (NombreInvalidoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
-                return RedirectToAction(nameof(Index));
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Create));
             }
             catch (DescripcionInvalidaException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                TempData["Error"] = "Oops! Ocurrió un error inesperado";
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -103,7 +137,22 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View();
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // POST: CabaniaController/Edit/5
@@ -124,7 +173,22 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View();
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // POST: CabaniaController/Delete/5
@@ -145,9 +209,24 @@ namespace PresentacionMVC.Controllers
         // GET: CabaniaController/Delete/5
         public ActionResult BusquedaFiltros()
         {
-            BusquedaCabaniaViewModal BusquedaModal = new BusquedaCabaniaViewModal();
-            BusquedaModal.TiposCabania = ListadoTipoCabania.ObtenerListado();
-            return View(BusquedaModal);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                BusquedaCabaniaViewModal BusquedaModal = new BusquedaCabaniaViewModal();
+                BusquedaModal.TiposCabania = ListadoTipoCabania.ObtenerListado();
+                return View(BusquedaModal);
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // POST: CabaniaController/Delete/5

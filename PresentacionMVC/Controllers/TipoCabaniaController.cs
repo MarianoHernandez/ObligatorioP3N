@@ -1,4 +1,5 @@
 ﻿    using Aplicacion.AplicacionesTipoCabaña;
+using Aplicacion.AplicacionesUsuario;
 using Datos.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +20,18 @@ namespace PresentacionMVC.Controllers
         IFindByName FindByName { get; set; }
         IDeleteTipo DeleteTipo { get; set; }
         IUpdateTipo UpdateTipo { get; set; }
+        IValidarSession ValidarLogin { get; set; }
 
- 
 
-        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo)
+
+        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo)
         {
             AltaTipoCabania = altaTipoCabania;
             ListadoTipoCabania = listadoTipoCabania;
             FindByName = findByName;
             DeleteTipo = deleteTipo;
             UpdateTipo = updateTipo;    
+            ValidarLogin = validarSession;
         }
 
 
@@ -84,7 +87,22 @@ namespace PresentacionMVC.Controllers
         // GET: TipoCabaniaController/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View();
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // POST: TipoCabaniaController/Create
