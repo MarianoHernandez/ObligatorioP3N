@@ -3,7 +3,9 @@ using Aplicacion.AplicacionesUsuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using Negocio.InterfacesRepositorio;
 using System.Net;
+
 
 
 namespace PresentacionMVC.Controllers
@@ -13,6 +15,7 @@ namespace PresentacionMVC.Controllers
 
         IAltaUsuario AltaUsuario { get; set; }
         ILoginUsuario LoginUsuario { get; set; }
+        IRepositorioUsuario repo { get; set; }
         public UsuarioController(IAltaUsuario altaUsuario, ILoginUsuario loginUsuario)
         {
             AltaUsuario = altaUsuario;
@@ -23,6 +26,7 @@ namespace PresentacionMVC.Controllers
         // GET: UsuarioController
         public ActionResult Index()
         {
+            
             return View();
 
         }
@@ -39,7 +43,7 @@ namespace PresentacionMVC.Controllers
                 LoginUsuario.Login(usuario);
                 HttpContext.Session.SetString("user", usuario.email);
                 TempData["Bien"] = "Se inicio sesión correctamente";
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Cabania");
             }
             catch (Exception)
             {

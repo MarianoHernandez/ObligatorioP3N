@@ -69,6 +69,8 @@ namespace PresentacionMVC
 
             builder.Services.AddDbContext<LibreriaContext>(options => options.UseSqlServer(strCon));
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -80,7 +82,9 @@ namespace PresentacionMVC
 
             app.UseRouting();
 
+
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

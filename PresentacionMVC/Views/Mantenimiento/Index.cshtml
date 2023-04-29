@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.trabajador)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.cabania)
+                @Html.DisplayNameFor(model => model.cabania.Nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.fecha)
@@ -52,7 +52,7 @@
                     @Html.DisplayFor(modelItem => item.trabajador)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.cabania)
+                    @Html.DisplayFor(modelItem => item.cabania.Nombre)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.fecha)

@@ -41,7 +41,10 @@ namespace Datos.Repositorios
 
         public IEnumerable<Mantenimiento> FindAll()
         {            
-            IEnumerable<Mantenimiento> mantenimiento = Contexto.Mantenimiento.ToList();
+            IEnumerable<Mantenimiento> mantenimiento = Contexto.Mantenimiento
+                .Include(man => man.cabania)
+                .ThenInclude(cab => cab.TipoCabania)
+                .ToList();
             return mantenimiento;
         }
         public void Remove(Mantenimiento mantenimiento)
