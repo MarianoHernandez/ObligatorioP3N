@@ -1,4 +1,5 @@
-﻿using Negocio.InterfacesRepositorio;
+﻿using Negocio.Entidades;
+using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Aplicacion.AplicacionesUsuario
             Repo = repo;
         }
 
-        public void Login(LoginUsuario login)
+        public Usuario Login(Usuario login)
         {
-            
+            return Repo.Login(login);
         }
     }
 }

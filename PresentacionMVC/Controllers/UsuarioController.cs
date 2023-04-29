@@ -3,6 +3,7 @@ using Aplicacion.AplicacionesUsuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using System.Net;
 
 
 namespace PresentacionMVC.Controllers
@@ -11,9 +12,11 @@ namespace PresentacionMVC.Controllers
     {
 
         IAltaUsuario AltaUsuario { get; set; }
-        public UsuarioController(IAltaUsuario altaUsuario)
+        ILoginUsuario LoginUsuario { get; set; }
+        public UsuarioController(IAltaUsuario altaUsuario, ILoginUsuario loginUsuario)
         {
             AltaUsuario = altaUsuario;
+            LoginUsuario = loginUsuario;
         }
 
 
@@ -21,6 +24,28 @@ namespace PresentacionMVC.Controllers
         public ActionResult Index()
         {
             return View();
+
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(Usuario usuario)
+        {
+            try
+            {
+                LoginUsuario.Login(usuario);
+                HttpContext.Session.SetString("user", usuario.email);
+                TempData["Bien"] = "Se inicio sesión correctamente";
+                return RedirectToAction("Index", "Usuario");
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Usuario o contraseña incorrecto";
+                return View();
+            }
         }
 
         // GET: UsuarioController/Details/5
@@ -91,5 +116,7 @@ namespace PresentacionMVC.Controllers
                 return View();
             }
         }
+
+
     }
 }

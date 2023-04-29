@@ -32,6 +32,7 @@ namespace Negocio.Entidades
                     "\r\n y minúsculas (al menos una de cada una) y dígitos (0 al 9)");
             }
 
+
         #endregion
         }
     }

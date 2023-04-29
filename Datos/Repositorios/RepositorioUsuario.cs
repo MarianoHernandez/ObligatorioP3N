@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Negocio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Datos.Entity;
-
+using Negocio.ExcepcionesPropias;
 
 namespace Datos.Repositorios
 {
@@ -46,9 +46,21 @@ namespace Datos.Repositorios
             throw new NotImplementedException();
         }
 
-        public void Login(Usuario usuario)
+        public void GetUsuario(string email, string password)
         {
             throw new NotImplementedException();
+        }
+        public Usuario Login(Usuario usuario)
+        {
+            
+           Usuario encontrado = Contexto.Usuario
+                            .Where(usu => usu.email == usuario.email && usu.password == usuario.password)
+                            .SingleOrDefault();
+            if(encontrado == null)
+            {
+                throw new LoginIncorrectoException("Email o contraseña incorrecta");
+            }
+            return encontrado;
         }
 
         public void Logout()

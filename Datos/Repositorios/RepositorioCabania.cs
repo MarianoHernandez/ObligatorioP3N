@@ -49,8 +49,8 @@ namespace Datos.Repositorios
         {
             IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania);
 
-            if (nombre != null) {
-                lista = lista.Where(cab => cab.Nombre == nombre);
+             if (nombre != null) {
+                lista = lista.Where(cab => cab.Nombre.Contains(nombre));
             }if (tipoId != 0) {
                 lista = lista.Where(cab => cab.TipoCabaniaId == tipoId);
             }if (cantidadPers > 0) { 

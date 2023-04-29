@@ -3,10 +3,12 @@ using Aplicacion.AplicacionesMantenimientos;
 using Aplicacion.AplicacionesTipoCabaña;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
 using PresentacionMVC.Models;
 using System.Net.WebSockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PresentacionMVC.Controllers
 {
@@ -15,11 +17,12 @@ namespace PresentacionMVC.Controllers
         IAltaMantenimiento AltaMantenimiento { get; set; }
         IListadoMantenimiento ListadoMantenimiento { get; set; }
         IDeleteMantenimiento DeleteMantenimiento { get; set; }
+
         IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
 
-        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento, IWebHostEnvironment webHostEnvironment,
-            IListadoCabania listadoCabania)
+        public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento
+           , IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
@@ -31,7 +34,7 @@ namespace PresentacionMVC.Controllers
         // GET: ManteniminetoController
         public ActionResult Index()
         {
-            //IEnumerable<Mantenimiento> mantenimiento = ListadoMantenimiento.ObtenerListado();
+
             return View(ListadoMantenimiento.ListadoAllMantenimientos());
         }
 
@@ -58,24 +61,16 @@ namespace PresentacionMVC.Controllers
 
             try
             {
-
                 VmMantenimiento.MantenimientoNuevo.CabaniaId = VmMantenimiento.IdCabania;
 
+                AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
 
-                //if (VmMantenimiento.MantenimientoNuevo.fecha.Day <= 3)
-                //{
-                    AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
-                //}
-                //else
-                //{
-                //    throw new MantenimientoInvalidoException("No se puede hacer mas de 3 mantenimientos por dia");
-                //}
                 return RedirectToAction(nameof(Index));
 
             }
             catch (Exception ex)
             {
-                TempData = ex.Message;
+                TempData["Error"] = ex.Message;
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -101,11 +96,17 @@ namespace PresentacionMVC.Controllers
             }
         }
 
+        public ActionResult FindById()
+        {
+            return View();
+        }
+
         // GET: ManteniminetoController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
+
 
         // POST: ManteniminetoController/Delete/5
         [HttpPost]

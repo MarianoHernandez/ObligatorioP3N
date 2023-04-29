@@ -10,7 +10,8 @@ namespace Negocio.InterfacesRepositorio
 {
     public interface IRepositorioUsuario : IRepositorio<Usuario>
     {
-        void  Login(Usuario usuario);
+        Usuario  Login(Usuario usuario);
+        void GetUsuario(string email, string password);
         void  Logout();
     }
 }

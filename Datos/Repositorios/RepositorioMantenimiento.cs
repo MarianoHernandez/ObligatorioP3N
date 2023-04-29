@@ -50,15 +50,16 @@ namespace Datos.Repositorios
             Contexto.SaveChanges();
         }
 
-        public Mantenimiento FindById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(Mantenimiento obj)
         {
             Contexto.Mantenimiento.Update(obj);
             Contexto.SaveChanges();
+        }
+
+        public Mantenimiento FindById(int id)
+        {
+
+            return Contexto.Mantenimiento.Find(id);
         }
 
         void IRepositorio<Mantenimiento>.Remove(int id)
