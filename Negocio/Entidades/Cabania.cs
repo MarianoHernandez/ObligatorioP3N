@@ -13,11 +13,13 @@ using Negocio.ExcepcionesPropias.Cabanias;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Negocio.Entidades
 {
     public class Cabania : IValidable
     {
+    // 
         [DisplayName("Numero Habitacion")]
         public int Id { get; set; }
         
