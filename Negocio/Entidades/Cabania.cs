@@ -13,13 +13,11 @@ using Negocio.ExcepcionesPropias.Cabanias;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
-using Microsoft.EntityFrameworkCore;
 
 namespace Negocio.Entidades
 {
     public class Cabania : IValidable
     {
-    // 
         [DisplayName("Numero Habitacion")]
         public int Id { get; set; }
         
@@ -33,6 +31,9 @@ namespace Negocio.Entidades
         public string Foto { get; set; }
         private static int NumeroFoto { get; set; } = 1;
 
+        public static int largoMaximo = 200;
+        public static int largoMinimo = 10; 
+
         public string SerializeNombreFoto(string nombreFoto) {
             
             this.Foto = nombreFoto.Replace(" ", "_");
@@ -41,7 +42,6 @@ namespace Negocio.Entidades
             NumeroFoto++;
             return Foto;
         }
-
 
         public void Validar()
         {
@@ -59,13 +59,10 @@ namespace Negocio.Entidades
 
             #region Validar Descripcion
 
-            if (Descripcion.Length < 10 || Descripcion.Length > 500) {
+            if (Descripcion.Length < largoMinimo || Descripcion.Length > largoMaximo) {
                 throw new DescripcionInvalidaException("La descripcion no puede tener menos de 10 caracteres ni mas de 500");
             }
             #endregion
-
-
-
 
         }
     }

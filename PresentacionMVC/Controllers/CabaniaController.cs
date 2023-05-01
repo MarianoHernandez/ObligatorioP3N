@@ -22,8 +22,9 @@ namespace PresentacionMVC.Controllers
         IBusquedaConFiltros BusquedaConFiltros { get; set; }
         IWebHostEnvironment Env { get; set; }
         IValidarSession ValidarLogin { get; set; }
+        ISeleccionarMaxMinDescripcion SeleccionarMaxMin { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania,ISeleccionarMaxMinDescripcion seleccionarMaxMinDescripcion, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -31,6 +32,7 @@ namespace PresentacionMVC.Controllers
             Env = webHostEnvironment;
             BusquedaConFiltros = busquedaConFiltros;
             ValidarLogin = validarSession;
+            SeleccionarMaxMin = seleccionarMaxMinDescripcion;
         }
 
 
@@ -249,6 +251,18 @@ namespace PresentacionMVC.Controllers
         {
             IEnumerable<Cabania> filtradas = BusquedaConFiltros.GetCabanias(Nombre, TipoID, CantidadPersonas, Habilitada);
             return View(filtradas);
+        }
+
+
+        public ActionResult CambiarConfiguracion() {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CambiarConfiguracion(int max, int min)
+        {
+
+            SeleccionarMaxMin.SeleccionarMaxMinDescripcion(max, min);
+            return RedirectToAction(nameof(Create));
         }
     }
 }

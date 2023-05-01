@@ -1,0 +1,55 @@
+﻿
+@{
+
+    ViewData["Title"] = "Cambiar Configuracion";
+}
+
+@if (TempData["Bien"] != null)
+{
+    <div class="alert alert-success p-3"> @TempData["Bien"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<h1>CambiarConfiguracion</h1>
+
+<h4>Cabania</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CambiarConfiguracion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+            <div class="form-group">
+                <label asp-for="max" class="control-label"></label>
+                <input asp-for="max" class="form-control" />
+                <span asp-validation-for="max" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="min" class="control-label"></label>
+                <input asp-for="min" class="form-control" />
+                <span asp-validation-for="min" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Configurar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-controller="Cabania" asp-action="CambiarConfiguracion"> Cambiar Configuracion</a>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
