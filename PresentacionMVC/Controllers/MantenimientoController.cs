@@ -69,10 +69,9 @@ namespace PresentacionMVC.Controllers
         public ActionResult Create(string nombre)
         {
             AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
-            if (nombre == null)
-                          
+
             vm.cabanias = ListadoCabania.ListadoAllCabania();
-            
+
             return View(vm);
         }
 
