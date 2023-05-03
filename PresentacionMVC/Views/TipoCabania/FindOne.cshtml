@@ -1,4 +1,4 @@
-﻿@model Negocio.Entidades.TipoCabania
+﻿@model PresentacionMVC.Models.EliminarOModificar
 
 @{
     ViewData["Title"] = "Encontrar Tipo";
@@ -12,7 +12,7 @@
 {
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
-<h1>FindOne</h1>
+<h1>Buscar</h1>
 
 <h4>TipoCabania</h4>
 <hr />
@@ -29,6 +29,10 @@
             <div class="form-group">
             <br>
                 <input type="submit" value="Buscar" class="btn btn-primary" />
+                @using (Html.BeginForm("FindOne", "TipoCabania", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.Accion)
+                }
             </div>
         </form>
     </div>

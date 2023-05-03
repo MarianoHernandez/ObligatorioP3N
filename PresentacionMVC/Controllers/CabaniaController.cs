@@ -23,8 +23,9 @@ namespace PresentacionMVC.Controllers
         IWebHostEnvironment Env { get; set; }
         IValidarSession ValidarLogin { get; set; }
         ISeleccionarMaxMinDescripcion SeleccionarMaxMin { get; set; }
+        IFindByIdCabania encontrar { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,ISeleccionarMaxMinDescripcion seleccionarMaxMinDescripcion, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania,ISeleccionarMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -33,6 +34,7 @@ namespace PresentacionMVC.Controllers
             BusquedaConFiltros = busquedaConFiltros;
             ValidarLogin = validarSession;
             SeleccionarMaxMin = seleccionarMaxMinDescripcion;
+            encontrar = enco;
         }
 
 
@@ -179,7 +181,8 @@ namespace PresentacionMVC.Controllers
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
-                return View();
+                Cabania cab = encontrar.FindById(id);
+                return View(cab);
             }
             catch (LoginIncorrectoException ex)
             {

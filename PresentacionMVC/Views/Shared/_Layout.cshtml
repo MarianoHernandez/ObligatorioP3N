@@ -16,7 +16,23 @@
             @if(Context.Session.GetString("user") != null)
             {
             <div class="container-fluid">
-
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <li class="nav-item dropdown list-unstyled">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Configuracion descripcion
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                        
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Cabania" asp-action="CambiarConfiguracion">Cabania</a>
+                                        </li>
+                                        </ul>
+                                    </li>
+                            </div>
+                        </div>
+                    </nav>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">

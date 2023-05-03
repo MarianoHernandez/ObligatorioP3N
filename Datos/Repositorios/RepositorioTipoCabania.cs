@@ -37,8 +37,9 @@ namespace Datos.Repositorios
             return tipo == null ? throw new NoEncontradoException("No se encontro el Tipo de Cabania") : tipo;
         }
 
-        public void Remove(TipoCabania tipo)
+        public void Remove(string nombre)
         {
+            TipoCabania tipo = FindByName(nombre);
             LibreriaContext.TipoCabania.Remove(tipo);
             LibreriaContext.SaveChanges();
         }

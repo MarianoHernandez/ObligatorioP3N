@@ -45,14 +45,11 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> <br></br>
         @using (Html.BeginForm("Delete", "TipoCabania", FormMethod.Post))
         {
             @Html.HiddenFor(m => m.Nombre)
-            @Html.HiddenFor(m => m.Id)
-            @Html.HiddenFor(m => m.Costo)
-            @Html.HiddenFor(m => m.Descripcion)
         }
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
     </form>
 </div>

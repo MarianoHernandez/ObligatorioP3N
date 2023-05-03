@@ -14,9 +14,9 @@ namespace Aplicacion.AplicacionesTipoCabaña
         public DeleteTipo(IRepositorioTipoCabania repositorioTipo) {
             Repo = repositorioTipo;
         }
-        void IDeleteTipo.DeleteTipo(TipoCabania tipo)
+        void IDeleteTipo.DeleteTipo(string nombre)
         {
-            Repo.Remove(tipo);
+            Repo.Remove(nombre);
         }
     }
 }

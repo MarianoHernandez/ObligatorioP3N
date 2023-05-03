@@ -1,15 +1,13 @@
-﻿    using Aplicacion.AplicacionesTipoCabaña;
+﻿using Aplicacion.AplicacionesTipoCabaña;
 using Aplicacion.AplicacionesUsuario;
-using Datos.Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
 using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
-using Newtonsoft.Json;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using PresentacionMVC.Models;
+
 
 namespace PresentacionMVC.Controllers
 {
@@ -55,17 +53,15 @@ namespace PresentacionMVC.Controllers
             }
         }
 
-        public ActionResult ShowOne(TipoCabania tipo)
-        {
-            return View(tipo);
-        }
-        
+
         public ActionResult FindOne(string accion) { 
             try
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
-                return View(); 
+                EliminarOModificar EM = new EliminarOModificar();
+                EM.Accion = accion;
+                return View(EM); 
             }catch (LoginIncorrectoException ex)
             {
                 TempData["Error"] = "Es necesario iniciar sesion";
@@ -79,16 +75,15 @@ namespace PresentacionMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FindOne(string nombre, string accion)
+        public ActionResult FindOne(EliminarOModificar EM)
         {
             try
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
-                TipoCabania tipo = FindByName.FindOne(nombre);
-                if(accion == "Eliminar") return RedirectToAction(nameof(Delete),tipo);
-                if(accion == "Modificar") return RedirectToAction(nameof(Edit),tipo);
-                return RedirectToAction(nameof(ShowOne),tipo);
+                if(EM.Accion == "Eliminar") return RedirectToAction(nameof(Delete), new { nombre = EM.Nombre });
+                if(EM.Accion == "Editar") return RedirectToAction(nameof(Edit),new { nombre=EM.Nombre });
+                return RedirectToAction(nameof(Details), new { nombre = EM.Nombre });
             }
             catch (NombreInvalidoException ex)
             {
@@ -178,6 +173,16 @@ namespace PresentacionMVC.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.InnerException is SqlException)
+                {
+                    SqlException sql = (SqlException)ex.InnerException;
+                    if (sql.Number == 2601)
+                    {
+                        TempData["Error"] = "Nombre duplicacdo";
+                        return View();
+                    }
+
+                }
                 TempData["Error"] = ex.Message;
                 return View();
             }
@@ -213,13 +218,13 @@ namespace PresentacionMVC.Controllers
         // POST: TipoCabaniaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(TipoCabania tipo)
+        public ActionResult Delete(string nombre,int id)
         {
             try
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
-                DeleteTipo.DeleteTipo(tipo);
+                DeleteTipo.DeleteTipo(nombre);
                 return RedirectToAction(nameof(Index));
             }
             catch (NoEncontradoException ex)

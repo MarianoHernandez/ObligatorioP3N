@@ -9,6 +9,6 @@ namespace Aplicacion.AplicacionesTipoCabaña
 {
     public interface IDeleteTipo
     {
-        void DeleteTipo(TipoCabania tipo);
+        void DeleteTipo(string nombre);
     }
 }
