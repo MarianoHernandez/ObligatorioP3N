@@ -38,8 +38,21 @@ namespace PresentacionMVC.Controllers
         // GET: TipoCabaniaController
         public ActionResult Index()
         {
-            IEnumerable<TipoCabania> tipos = ListadoTipoCabania.ObtenerListado();
-            return View(tipos);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                IEnumerable<TipoCabania> tipos = ListadoTipoCabania.ObtenerListado();
+                return View(tipos);
+            }catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         public ActionResult ShowOne(TipoCabania tipo)
@@ -47,32 +60,49 @@ namespace PresentacionMVC.Controllers
             return View(tipo);
         }
         
-        public ActionResult FindOne() { 
-            return View(); 
+        public ActionResult FindOne(string accion) { 
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View(); 
+            }catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FindOne(string nombre)
+        public ActionResult FindOne(string nombre, string accion)
         {
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 TipoCabania tipo = FindByName.FindOne(nombre);
+                if(accion == "Eliminar") return RedirectToAction(nameof(Delete),tipo);
+                if(accion == "Modificar") return RedirectToAction(nameof(Edit),tipo);
                 return RedirectToAction(nameof(ShowOne),tipo);
             }
             catch (NombreInvalidoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
-            catch (DescripcionInvalidaException ex)
+            catch (LoginIncorrectoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
-                return View();
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
@@ -80,8 +110,21 @@ namespace PresentacionMVC.Controllers
         // GET: TipoCabaniaController/Details/5
         public ActionResult Details(string nombre)
         {
-            TipoCabania tipo = FindByName.FindOne(nombre);
-            return View(tipo);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                TipoCabania tipo = FindByName.FindOne(nombre);
+                return View(tipo);
+            }catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // GET: TipoCabaniaController/Create
@@ -112,23 +155,30 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 tipoCabania.Validar();
                 AltaTipoCabania.Alta(tipoCabania);
                 return RedirectToAction(nameof(Index));
             }
             catch (NombreInvalidoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
             catch (DescripcionInvalidaException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
-            catch
+            catch (LoginIncorrectoException ex)
             {
-                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
@@ -138,18 +188,24 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 TipoCabania tipo = FindByName.FindOne(nombre);
                 return View(tipo);
             }
             catch (NoEncontradoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
-
-            catch
+            catch (LoginIncorrectoException ex)
             {
-                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
@@ -161,20 +217,25 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
-               
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 DeleteTipo.DeleteTipo(tipo);
                 return RedirectToAction(nameof(Index));
             }
             catch (NoEncontradoException ex)
             {
-                ViewBag.Mensaje = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
-
-            
-            catch
+            catch (LoginIncorrectoException ex)
             {
-                ViewBag.Mensaje = "Oops! Ocurrió un error inesperado";
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
@@ -182,8 +243,22 @@ namespace PresentacionMVC.Controllers
         // GET: TipoCabaniaController/Edit/5
         public ActionResult Edit(string nombre)
         {
-            
-            return View(FindByName.FindOne(nombre));
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View(FindByName.FindOne(nombre));
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         // POST: TipoCabaniaController/Edit/5
@@ -193,14 +268,23 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 TipoCabania tipo = FindByName.FindOne(nombre);
                 tipo.Costo = tipoEditado.Costo;
-                tipo.Descripcion = tipoEditado.Descripcion;                
+                tipo.Descripcion = tipoEditado.Descripcion;
+                tipo.Validar();
                 UpdateTipo.Update(tipo);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (LoginIncorrectoException ex)
             {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }

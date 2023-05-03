@@ -1,6 +1,7 @@
 ﻿using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesMantenimientos;
 using Aplicacion.AplicacionesTipoCabaña;
+using Aplicacion.AplicacionesUsuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -18,17 +19,18 @@ namespace PresentacionMVC.Controllers
         IAltaMantenimiento AltaMantenimiento { get; set; }
         IListadoMantenimiento ListadoMantenimiento { get; set; }
         IDeleteMantenimiento DeleteMantenimiento { get; set; }
-
+        IValidarSession ValidarLogin { get; set; }
         IFindByDate FindByDates { get; set; }
         IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
 
         public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento,
-            IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
+           IValidarSession validarSession, IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
             DeleteMantenimiento = deleteMantenimiento;
+            ValidarLogin = validarSession;
             FindByDates = findByDates;
             Env = webHostEnvironment;
             ListadoCabania = listadoCabania;
@@ -38,7 +40,22 @@ namespace PresentacionMVC.Controllers
         public ActionResult Index()
         {
 
-            return View(ListadoMantenimiento.ListadoAllMantenimientos());
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                return View(ListadoMantenimiento.ListadoAllMantenimientos());
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
 
         // GET: ManteniminetoController/Details/5
@@ -49,10 +66,13 @@ namespace PresentacionMVC.Controllers
         }
 
         // GET: ManteniminetoController/Create
-        public ActionResult Create()
+        public ActionResult Create(string nombre)
         {
             AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
+            if (nombre == null)
+                          
             vm.cabanias = ListadoCabania.ListadoAllCabania();
+            
             return View(vm);
         }
 
@@ -62,8 +82,12 @@ namespace PresentacionMVC.Controllers
         public ActionResult Create(AltaMantenimientoViewModel VmMantenimiento)
         {
 
+
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+
                 VmMantenimiento.MantenimientoNuevo.CabaniaId = VmMantenimiento.IdCabania;
 
                 AltaMantenimiento.Alta(VmMantenimiento.MantenimientoNuevo);
@@ -106,27 +130,53 @@ namespace PresentacionMVC.Controllers
 
         public ActionResult FindByDate()
         {
-            BusquedaMantenimientoModel BusquedaModal = new BusquedaMantenimientoModel();
-            return View(BusquedaModal);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                BusquedaMantenimientoModel BusquedaModal = new BusquedaMantenimientoModel();
+                return View(BusquedaModal);
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
         [HttpPost]
         public ActionResult FindByDate(DateTime fecha1, DateTime fecha2)
         {
-            try
-            {
-                return RedirectToAction(nameof(MostrarMantenimientoFiltrado), new { fecha1, fecha2 });
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(MostrarMantenimientoFiltrado), new { fecha1, fecha2 });
+
         }
 
         public ActionResult MostrarMantenimientoFiltrado(DateTime Fecha1, DateTime Fecha2)
         {
-            IEnumerable<Mantenimiento> filtrados = FindByDates.FindByDateMantenimiento(Fecha1, Fecha2);
-            return View(filtrados);
+            try
+            {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
+                IEnumerable<Mantenimiento> filtrados = FindByDates.FindByDateMantenimiento(Fecha1, Fecha2);
+                return View(filtrados);
+            }
+            catch (LoginIncorrectoException ex)
+            {
+                TempData["Error"] = "Es necesario iniciar sesion";
+                return RedirectToAction("Login", "Usuario");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(ex);
+            }
         }
+
+
 
         // GET: ManteniminetoController/Delete/5
         public ActionResult Delete(int id)
@@ -142,6 +192,8 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
+                string userEmail = HttpContext.Session.GetString("user");
+                ValidarLogin.Validar(userEmail);
                 DeleteMantenimiento.DeleteMantenimiento(mantenimiento);
                 return RedirectToAction(nameof(Index));
             }

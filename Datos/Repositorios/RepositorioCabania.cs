@@ -72,5 +72,10 @@ namespace Datos.Repositorios
 
         }
 
+        public void ValorDescripcion(int max, int min)
+        {
+            Cabania.largoMinimo = min;
+            Cabania.largoMaximo = max;
+        }
     }
 }

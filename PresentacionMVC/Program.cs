@@ -49,6 +49,7 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IListadoCabania,ListadoCabania>();
             builder.Services.AddScoped<IFindById, FindById>();
             builder.Services.AddScoped<IBusquedaConFiltros, BusquedaConFiltros>();
+            builder.Services.AddScoped<ISeleccionarMaxMinDescripcion, SeleccionarMaxMin>();
 
             #endregion
 

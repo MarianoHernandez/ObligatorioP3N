@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<Negocio.Entidades.Cabania>
 
 @{
-    ViewData["Title"] = "MostrerFiltradas";
+    ViewData["Title"] = "Index";
 }
+
 @if (TempData["Bien"] != null)
 {
     <div class="alert alert-success p-3"> @TempData["Bien"]</div>
@@ -12,7 +13,9 @@
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<h1>MostrerFiltradas</h1>
+<h1>Index</h1>
+
+<p> @ViewBag.Mensaje</p>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -24,9 +27,6 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoCabaniaId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
@@ -36,15 +36,19 @@
                 @Html.DisplayNameFor(model => model.Jacuzzi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Habilitada)
+                @Html.DisplayNameFor(model => model.TipoCabania.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantidadPersonas)
+                @Html.DisplayNameFor(model => model.TipoCabania.Costo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Habilitada)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Foto)
             </th>
-            <th></th>
+                        <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -52,9 +56,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoCabaniaId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
@@ -66,20 +67,23 @@
                 @Html.DisplayFor(modelItem => item.Jacuzzi)
             </td>
             <td>
+               @Html.DisplayFor(modelItem => item.TipoCabania.Nombre)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.TipoCabania.Costo)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Habilitada)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CantidadPersonas)
+                <img src="/Imagenes/@item.Foto" height="100" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Foto)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Create", "Create","Mantenimiento", new {  nombre=item.Nombre }) |
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+

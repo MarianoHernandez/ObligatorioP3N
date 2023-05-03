@@ -255,7 +255,8 @@ namespace PresentacionMVC.Controllers
 
 
         public ActionResult CambiarConfiguracion() {
-            return View();
+            ConiguracionDescripcionModel configuracion = new ConiguracionDescripcionModel();
+            return View(configuracion);
         }
         [HttpPost]
         public ActionResult CambiarConfiguracion(int max, int min)

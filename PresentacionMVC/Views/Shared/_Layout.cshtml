@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +13,10 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            @if(Context.Session.GetString("user") != null)
+            {
             <div class="container-fluid">
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -30,8 +35,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="TipoCabania" asp-action="FindOne">Busqueda Tipo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoCabania" asp-action="FindOne">Eliminar Tipo</a>
-                        </li>                       
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoCabania" asp-action="FindOne" asp-route-accion="Eliminar">Eliminar Tipo</a>
+                        </li>       
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoCabania" asp-action="FindOne" asp-route-accion="Editar">Modificar Tipo</a>
+                        </li>                  
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cabania" asp-action="BusquedaFiltros">Busqueda Por Filtros</a>
                         </li>               
@@ -41,14 +49,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Mantenimiento" asp-action="FindByDate">Busqueda de Mantenimientos</a>
                         </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Mantenimiento" asp-action="Create">Crear Mantenimientos</a>
+                            </li>
                     </ul>
                 </div>
+            
                 <a class="navbar-brand" asp-area="" asp-controller="Usuario" asp-action="Logout">LogOut</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
+            }
         </nav>
     </header>
     <div class="container">

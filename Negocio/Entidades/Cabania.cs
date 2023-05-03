@@ -1,6 +1,6 @@
 
-﻿using System;
-﻿using Negocio.ExcepcionesPropias;
+using System;
+using Negocio.ExcepcionesPropias;
 using Negocio.InterfacesDominio;
 using System;
 using System.Collections.Generic;
@@ -13,14 +13,16 @@ using Negocio.ExcepcionesPropias.Cabanias;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Negocio.Entidades
 {
+    [Index(nameof(Nombre), IsUnique = true)]
     public class Cabania : IValidable
     {
         [DisplayName("Numero Habitacion")]
         public int Id { get; set; }
-        
+
         public TipoCabania TipoCabania { get; set; }
         public int TipoCabaniaId { get; set; }
         public string Nombre { get; set; }
@@ -32,10 +34,11 @@ namespace Negocio.Entidades
         private static int NumeroFoto { get; set; } = 1;
 
         public static int largoMaximo = 200;
-        public static int largoMinimo = 10; 
+        public static int largoMinimo = 10;
 
-        public string SerializeNombreFoto(string nombreFoto) {
-            
+        public string SerializeNombreFoto(string nombreFoto)
+        {
+
             this.Foto = nombreFoto.Replace(" ", "_");
             this.Foto += NumeroFoto;
             this.Foto += ".png";
@@ -50,7 +53,8 @@ namespace Negocio.Entidades
             {
                 throw new NombreInvalidoException("El nombre solo incluye caracteres alfabéticos y espacios embebidos, pero no al principio ni final");
             }
-            if (string.IsNullOrEmpty(Nombre)) {
+            if (string.IsNullOrEmpty(Nombre))
+            {
 
                 throw new NombreInvalidoException("El nombre no puede ser nulo o vacío");
 
@@ -59,8 +63,9 @@ namespace Negocio.Entidades
 
             #region Validar Descripcion
 
-            if (Descripcion.Length < largoMinimo || Descripcion.Length > largoMaximo) {
-                throw new DescripcionInvalidaException("La descripcion no puede tener menos de 10 caracteres ni mas de 500");
+            if (Descripcion.Length < largoMinimo || Descripcion.Length > largoMaximo)
+            {
+                throw new DescripcionInvalidaException($"La descripcion no puede tener menos de {largoMinimo} caracteres ni mas de {largoMaximo}");
             }
             #endregion
 
