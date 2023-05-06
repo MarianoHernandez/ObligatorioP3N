@@ -54,7 +54,7 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IFindByIdCabania, FindByIdCabania>();
 
             builder.Services.AddScoped<IBusquedaConFiltros, BusquedaConFiltros>();
-            builder.Services.AddScoped<IObtenerMaxMinDescripcion, ObtenerMaxMin>();
+            
 
             #endregion
 
@@ -68,7 +68,8 @@ namespace PresentacionMVC
 
             #endregion
 
-
+            builder.Services.AddScoped<IAltaParametro, AltaParametro>();
+            builder.Services.AddScoped<IObtenerMaxMinDescripcion, ObtenerMaxMin>();
 
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile("appsettings.json", false, true);

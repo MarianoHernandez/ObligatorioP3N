@@ -98,7 +98,7 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
-                VmAltaCabania.CabaniaNueva.Validar();
+                //VmAltaCabania.CabaniaNueva.Validar();
 
                 string rutaWwwRoot = Env.WebRootPath;
                 string rutaCarpeta = Path.Combine(rutaWwwRoot, "Imagenes");

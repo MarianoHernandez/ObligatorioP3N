@@ -20,7 +20,7 @@ namespace Datos.Repositorios
 
         public Parametro ObtenerParametrosCabania()
         {
-            return LibreriaContext.Parametros.Where(par => par.Nombre == "Cabania").SingleOrDefault();
+            return LibreriaContext.Parametro.Where(par => par.Nombre == "Cabania").SingleOrDefault();
         }
 
         public Parametro ObtenerParametrosTipo()
@@ -31,7 +31,7 @@ namespace Datos.Repositorios
         public void Add(Parametro obj)
         {
             obj.Validar();
-            LibreriaContext.Parametros.Add(obj);
+            LibreriaContext.Parametro.Add(obj);
             LibreriaContext.SaveChanges();
         }
 
