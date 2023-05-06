@@ -1,4 +1,5 @@
-﻿using Negocio.Entidades;
+﻿using Aplicacion.AplicacionParametros;
+using Negocio.Entidades;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,20 @@ namespace Aplicacion.AplicacionesCabaña
     public class AltaCabania : IAltaCabania
     {
         public IRepositorioCabania Repo { get; set; }
-
-        public AltaCabania(IRepositorioCabania repo) {
+        public IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
+        public AltaCabania(IRepositorioCabania repo, IObtenerMaxMinDescripcion obtenerMaxMin)
+        {
 
             Repo = repo;
+            ObtenerMaxMin = obtenerMaxMin;
         }
 
 
         public void Alta( Cabania cabania)
         {
+            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion();
+            Cabania.largoMaximo = param.ValorMaximo;
+            Cabania.largoMinimo = param.ValorMinimo;
             Repo.Add(cabania);
         }
     }

@@ -10,6 +10,7 @@ namespace Datos.Entity
         public DbSet<TipoCabania> TipoCabania { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Mantenimiento> Mantenimiento { get; set; }
+        public DbSet<Parametro> Parametros { get; set; }
 
         public LibreriaContext(DbContextOptions<LibreriaContext> options) : base(options)
         {            

@@ -1,6 +1,7 @@
 ﻿using Aplicacion.AplicacionesCabaña;
 using Aplicacion.AplicacionesTipoCabaña;
 using Aplicacion.AplicacionesUsuario;
+using Aplicacion.AplicacionParametros;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
@@ -22,10 +23,10 @@ namespace PresentacionMVC.Controllers
         IBusquedaConFiltros BusquedaConFiltros { get; set; }
         IWebHostEnvironment Env { get; set; }
         IValidarSession ValidarLogin { get; set; }
-        ISeleccionarMaxMinDescripcion SeleccionarMaxMin { get; set; }
+        IObtenerMaxMinDescripcion SeleccionarMaxMin { get; set; }
         IFindByIdCabania encontrar { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,ISeleccionarMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania,IObtenerMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -256,17 +257,5 @@ namespace PresentacionMVC.Controllers
             return View(filtradas);
         }
 
-
-        public ActionResult CambiarConfiguracion() {
-            ConiguracionDescripcionModel configuracion = new ConiguracionDescripcionModel();
-            return View(configuracion);
-        }
-        [HttpPost]
-        public ActionResult CambiarConfiguracion(int max, int min)
-        {
-
-            SeleccionarMaxMin.SeleccionarMaxMinDescripcion(max, min);
-            return RedirectToAction(nameof(Create));
-        }
     }
 }
