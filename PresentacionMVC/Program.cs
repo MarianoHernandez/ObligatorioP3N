@@ -6,6 +6,7 @@ using Datos.Entity;
 using Microsoft.EntityFrameworkCore;
 using Aplicacion.AplicacionesMantenimientos;
 using Aplicacion.AplicacionesUsuario;
+using Aplicacion.AplicacionParametros;
 
 namespace PresentacionMVC
 {
@@ -23,6 +24,8 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IRepositorioCabania, RepositorioCabania>();
             builder.Services.AddScoped<IRepositorioMantenimiento, RepositorioMantenimiento>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            builder.Services.AddScoped<IRepositorioParametros, RepositorioParametros>();
+
 
             #region Usuario
 
@@ -51,7 +54,7 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IFindByIdCabania, FindByIdCabania>();
 
             builder.Services.AddScoped<IBusquedaConFiltros, BusquedaConFiltros>();
-            builder.Services.AddScoped<ISeleccionarMaxMinDescripcion, SeleccionarMaxMin>();
+            
 
             #endregion
 
@@ -65,7 +68,8 @@ namespace PresentacionMVC
 
             #endregion
 
-
+            builder.Services.AddScoped<IAltaParametro, AltaParametro>();
+            builder.Services.AddScoped<IObtenerMaxMinDescripcion, ObtenerMaxMin>();
 
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddJsonFile("appsettings.json", false, true);
