@@ -26,6 +26,7 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
+            obj.Validar();
             IEnumerable<Mantenimiento> mantenimientos = Contexto.Mantenimiento
                 .Where(man => man.CabaniaId == obj.CabaniaId && man.fecha.DayOfYear == obj.fecha.DayOfYear)
                 .ToList();
