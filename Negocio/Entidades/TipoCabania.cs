@@ -25,8 +25,8 @@ namespace Negocio.Entidades
             {
                 throw new NombreInvalidoException("El nombre solo incluye caracteres alfabéticos y espacios embebidos, pero no al principio ni final)");
             }
-            if (largoMinimo < 10 || largoMaximo > 200) {
-                throw new DescripcionInvalidaException("La descripcion no puede tener menos de 10 caracteres ni mas de 500");
+            if (Descripcion.Length > largoMaximo || Descripcion.Length < largoMinimo) {
+                throw new DescripcionInvalidaException($"La descripcion no puede tener menos de {largoMinimo} caracteres ni mas de {largoMaximo}");
             }
             
         }

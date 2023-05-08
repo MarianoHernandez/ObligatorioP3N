@@ -67,6 +67,7 @@ namespace PresentacionMVC.Controllers
                     string userEmail = HttpContext.Session.GetString("user");
                     ValidarLogin.Validar(userEmail);
                     param.Validar();
+
                     UpdateParametro.Update(param);
 
 

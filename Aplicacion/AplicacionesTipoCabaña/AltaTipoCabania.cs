@@ -13,18 +13,15 @@ namespace Aplicacion.AplicacionesTipoCabaña
     public class AltaTipoCabania : IAltaTipoCabania
     {
         public IRepositorioTipoCabania Repositorio { get; set; }
-         public IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
-        public AltaTipoCabania(IRepositorioTipoCabania repo, IObtenerMaxMinDescripcion obtenerMaxMin) { 
+
+        public AltaTipoCabania(IRepositorioTipoCabania repo) { 
             Repositorio = repo;
-            ObtenerMaxMin = obtenerMaxMin;
+
         }
 
         public void Alta(TipoCabania tipoCabania)
         {
-            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Tipo");
-            TipoCabania.largoMaximo = param.ValorMaximo;
-            TipoCabania.largoMinimo = param.ValorMinimo;
             Repositorio.Add(tipoCabania);
         }
     }

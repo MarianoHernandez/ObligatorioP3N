@@ -1,9 +1,11 @@
 ﻿using Aplicacion.AplicacionesTipoCabaña;
 using Aplicacion.AplicacionesUsuario;
+using Aplicacion.AplicacionParametros;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
 using PresentacionMVC.Models;
@@ -19,10 +21,10 @@ namespace PresentacionMVC.Controllers
         IDeleteTipo DeleteTipo { get; set; }
         IUpdateTipo UpdateTipo { get; set; }
         IValidarSession ValidarLogin { get; set; }
+       IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
 
-
-        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo)
+        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo, IObtenerMaxMinDescripcion obtenerMaxMin)
         {
             AltaTipoCabania = altaTipoCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -30,6 +32,7 @@ namespace PresentacionMVC.Controllers
             DeleteTipo = deleteTipo;
             UpdateTipo = updateTipo;    
             ValidarLogin = validarSession;
+            ObtenerMaxMin = obtenerMaxMin;
         }
 
 
@@ -152,6 +155,9 @@ namespace PresentacionMVC.Controllers
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
+                Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Tipo");
+                TipoCabania.largoMaximo = param.ValorMaximo;
+                TipoCabania.largoMinimo = param.ValorMinimo;
                 tipoCabania.Validar();
                 AltaTipoCabania.Alta(tipoCabania);
                 return RedirectToAction(nameof(Index));
