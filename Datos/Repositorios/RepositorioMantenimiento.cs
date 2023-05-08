@@ -85,6 +85,7 @@ namespace Datos.Repositorios
             IEnumerable<Mantenimiento> lista = Contexto.Mantenimiento
                 .Include(o => o.cabania)
                 .Where(man => man.fecha > Fecha1 && man.fecha < Fecha2)
+                .OrderByDescending(cos => cos.costo)
                 .ToList();
 
             return lista;
