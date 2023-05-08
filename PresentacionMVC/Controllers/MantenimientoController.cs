@@ -66,7 +66,7 @@ namespace PresentacionMVC.Controllers
         }
 
         // GET: ManteniminetoController/Create
-        public ActionResult Create(string nombre)
+        public ActionResult Create()
         {
             AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
 

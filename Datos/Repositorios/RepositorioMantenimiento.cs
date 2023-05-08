@@ -26,7 +26,6 @@ namespace Datos.Repositorios
 
         public void Add(Mantenimiento obj)
         {
-            obj.Validar();
             IEnumerable<Mantenimiento> mantenimientos = Contexto.Mantenimiento
                 .Where(man => man.CabaniaId == obj.CabaniaId && man.fecha.DayOfYear == obj.fecha.DayOfYear)
                 .ToList();
@@ -44,14 +43,6 @@ namespace Datos.Repositorios
             Contexto.Mantenimiento.Add(obj);
             Contexto.SaveChanges();
 
-        }
-
-        public IEnumerable<Mantenimiento> FindByDateMantenimiento(DateTime d1, DateTime d2)
-        {
-            IEnumerable<Mantenimiento> mantenimientos = Contexto.Mantenimiento
-                .Where(fec => fec.fecha.Date > d1 && fec.fecha.Date < d2)
-                .ToList();
-            return mantenimientos;
         }
 
         public IEnumerable<Mantenimiento> FindAll()
