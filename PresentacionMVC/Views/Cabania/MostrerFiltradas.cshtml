@@ -13,13 +13,21 @@
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<h1>Index</h1>
+<h1>Busqueda</h1>
 
 <p> @ViewBag.Mensaje</p>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+        @if (Model.Count() == 0)
+        {
+    <div>No se encontraron Cabañas</div>
+}
+else
+{
+    
 <table class="table">
     <thead>
         <tr>
@@ -52,7 +60,10 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+
+            
+        
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -82,8 +93,9 @@
                 @Html.ActionLink("Create", "Create","Mantenimiento", new {  nombre=item.Nombre }) |
             </td>
         </tr>
+            
 }
     </tbody>
 </table>
 
-
+}
