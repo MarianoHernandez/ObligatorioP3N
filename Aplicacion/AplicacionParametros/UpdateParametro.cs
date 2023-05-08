@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionParametros
 {
-    public class AltaParametro :IAltaParametro
+    public class UpdateParametro :IUpdateParametro
     {
 
         public IRepositorioParametros Repo { get; set; }
-        public AltaParametro(IRepositorioParametros repo)
+        public UpdateParametro(IRepositorioParametros repo)
         {
 
             Repo = repo;
         }
 
 
-        public void Alta(Parametro param)
+        public void Update(Parametro param)
         {
-            Repo.Add(param);
+            Repo.Update(param);
         }
     }
 }

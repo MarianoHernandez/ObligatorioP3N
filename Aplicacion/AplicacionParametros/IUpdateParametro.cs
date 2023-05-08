@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.AplicacionParametros
 {
-    public interface IAltaParametro
+    public interface IUpdateParametro
     {
-        void Alta(Parametro param);
+        void Update(Parametro param);
     }
 }

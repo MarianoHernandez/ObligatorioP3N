@@ -16,10 +16,10 @@ namespace PresentacionMVC.Controllers
     public class ParametrosController : Controller
     {
         IValidarSession ValidarLogin { get; set; }
-        IAltaParametro AltaParametro { get; set; }
-        public ParametrosController(IValidarSession validar,IAltaParametro alta) {
+        IUpdateParametro UpdateParametro { get; set; }
+        public ParametrosController(IValidarSession validar,IUpdateParametro update) {
             ValidarLogin = validar;
-            AltaParametro = alta;
+            UpdateParametro = update;
         }
 
         // GET: ParametrosController
@@ -44,15 +44,33 @@ namespace PresentacionMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Parametro param)
         {
+            return RedirectToAction(nameof(Index), "Cabania");
+        }
+        
+
+        // GET: ParametrosController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: ParametrosController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Parametro param)
+        {
             try
             {
+
+                try
+                {
                     string userEmail = HttpContext.Session.GetString("user");
                     ValidarLogin.Validar(userEmail);
-                param.Validar();
-                AltaParametro.Alta(param);
-                    
+                    param.Validar();
+                    UpdateParametro.Update(param);
 
-                    return RedirectToAction(nameof(Index),"Cabania");
+
+                    return RedirectToAction(nameof(Index), "Cabania");
                 }
                 catch (NombreInvalidoException ex)
                 {
@@ -83,24 +101,7 @@ namespace PresentacionMVC.Controllers
                     }
                     TempData["Error"] = ex.Message;
                     return View();
-            }
-        }
-        
-
-        // GET: ParametrosController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ParametrosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+                }
             }
             catch
             {

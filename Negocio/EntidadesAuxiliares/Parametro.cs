@@ -30,7 +30,7 @@ namespace Negocio.EntidadesAuxiliares
         {
             if (ValorMaximo < ValorMinimo)
             {
-                throw new Exception("El valor Maximo de la descripcion tiene que ser mayor al Menor");
+                throw new DescripcionInvalidaException("El valor Maximo de la descripcion tiene que ser mayor al Menor");
             }
         }
     }

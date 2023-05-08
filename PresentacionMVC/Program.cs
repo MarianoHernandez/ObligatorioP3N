@@ -68,7 +68,7 @@ namespace PresentacionMVC
 
             #endregion
 
-            builder.Services.AddScoped<IAltaParametro, AltaParametro>();
+            builder.Services.AddScoped<IUpdateParametro, UpdateParametro>();
             builder.Services.AddScoped<IObtenerMaxMinDescripcion, ObtenerMaxMin>();
 
             var configurationBuilder = new ConfigurationBuilder();

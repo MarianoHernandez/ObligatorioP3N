@@ -24,7 +24,7 @@ namespace Aplicacion.AplicacionesCabaña
 
         public void Alta( Cabania cabania)
         {
-            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion();
+            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Cabania");
             Cabania.largoMaximo = param.ValorMaximo;
             Cabania.largoMinimo = param.ValorMinimo;
             Repo.Add(cabania);

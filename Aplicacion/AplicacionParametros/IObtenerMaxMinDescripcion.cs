@@ -5,7 +5,7 @@ namespace Aplicacion.AplicacionParametros
 {
     public interface IObtenerMaxMinDescripcion
     {
-        Parametro ObtenerMaxMinDescripcion();
+        Parametro ObtenerMaxMinDescripcion(string nombre);
 
     }
 }

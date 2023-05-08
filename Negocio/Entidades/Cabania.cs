@@ -34,7 +34,7 @@ namespace Negocio.Entidades
         public string Foto { get; set; }
         private static int NumeroFoto { get; set; } = 1;
 
-        public static int largoMaximo = 200;
+        public static int largoMaximo = 500;
         public static int largoMinimo = 10;
 
         public string SerializeNombreFoto(string nombreFoto)
