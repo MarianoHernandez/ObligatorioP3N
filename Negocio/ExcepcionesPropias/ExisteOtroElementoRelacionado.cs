@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Negocio.ExcepcionesPropias
 {
-    internal class Class1
+    public class ExisteOtroElementoRelacionado
     {
+        public ExisteOtroElementoRelacionado() { }
+
+        public ExisteOtroElementoRelacionado(string message) : base(message) { }
+
+        public ExisteOtroElementoRelacionado(string message, Exception inner) : base(message, inner) { }
     }
 }
