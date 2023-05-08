@@ -243,7 +243,7 @@ namespace PresentacionMVC.Controllers
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
                 IEnumerable<Cabania> cabanias = FindCabaniaPorTipo.FindByTipoCabania(nombre);
-                if (cabanias.Count() != 0) throw new Exception("No se puede eliminar el Tipo ya que hay cabanias registradas con el tipo");
+                if (cabanias.Count() != 0) throw new ExisteOtroElementoRelacionado("No se puede eliminar el Tipo ya que hay cabanias registradas con el tipo");
                 DeleteTipo.DeleteTipo(nombre);
                 return RedirectToAction(nameof(Index));
             }
@@ -257,7 +257,12 @@ namespace PresentacionMVC.Controllers
                 TempData["Error"] = "Es necesario iniciar sesion";
                 return RedirectToAction("Login", "Usuario");
             }
-            
+            catch (ExisteOtroElementoRelacionado ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index", "TipoCabania");
+            }
+
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
