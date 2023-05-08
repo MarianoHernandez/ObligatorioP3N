@@ -28,6 +28,9 @@ namespace Negocio.Entidades
             if (Descripcion.Length > largoMaximo || Descripcion.Length < largoMinimo) {
                 throw new DescripcionInvalidaException($"La descripcion no puede tener menos de {largoMinimo} caracteres ni mas de {largoMaximo}");
             }
+            if (Costo<0) {
+                throw new Exception("El costo debe ser positivo");
+            }
             
         }
     }
