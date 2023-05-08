@@ -65,6 +65,8 @@ namespace PresentacionMVC
             builder.Services.AddScoped<IFindByName, FindByName>();
             builder.Services.AddScoped<IDeleteTipo, DeleteTipo>();
             builder.Services.AddScoped<IUpdateTipo, UpdateTipo>();
+            builder.Services.AddScoped<IFindCabaniaPorTipo, FindCabaniaPorTipo>();
+
 
             #endregion
 

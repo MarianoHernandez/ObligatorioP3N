@@ -61,6 +61,12 @@ namespace Datos.Repositorios
             return lista.ToList();
         }
 
+        public IEnumerable<Cabania> FindCabañaTipo(string tipo)
+        {
+            IEnumerable<Cabania> lista = LibreriaContext.Cabania.Include(o => o.TipoCabania).Where(cab=> cab.TipoCabania.Nombre == tipo);
+            return lista.ToList();
+        }
+
         public void Remove(int id)
         {
             throw new NotImplementedException();

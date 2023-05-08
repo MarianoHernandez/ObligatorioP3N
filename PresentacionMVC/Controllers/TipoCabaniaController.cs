@@ -1,6 +1,7 @@
 ﻿using Aplicacion.AplicacionesTipoCabaña;
 using Aplicacion.AplicacionesUsuario;
 using Aplicacion.AplicacionParametros;
+using Datos.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +23,12 @@ namespace PresentacionMVC.Controllers
         IDeleteTipo DeleteTipo { get; set; }
         IUpdateTipo UpdateTipo { get; set; }
         IValidarSession ValidarLogin { get; set; }
+        IFindCabaniaPorTipo FindCabaniaPorTipo { get; set; }
+
        IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
 
-        public TipoCabaniaController(IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo, IObtenerMaxMinDescripcion obtenerMaxMin)
+        public TipoCabaniaController(IFindCabaniaPorTipo findCabaniaPorTipo, IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo, IObtenerMaxMinDescripcion obtenerMaxMin)
         {
             AltaTipoCabania = altaTipoCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -34,6 +37,7 @@ namespace PresentacionMVC.Controllers
             UpdateTipo = updateTipo;    
             ValidarLogin = validarSession;
             ObtenerMaxMin = obtenerMaxMin;
+            FindCabaniaPorTipo = findCabaniaPorTipo;
         }
 
 
@@ -238,6 +242,8 @@ namespace PresentacionMVC.Controllers
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
+                IEnumerable<Cabania> cabanias = FindCabaniaPorTipo.FindByTipoCabania(nombre);
+                if (cabanias.Count() != 0) throw new Exception("No se puede eliminar el Tipo ya que hay cabanias registradas con el tipo");
                 DeleteTipo.DeleteTipo(nombre);
                 return RedirectToAction(nameof(Index));
             }
