@@ -1,5 +1,6 @@
 ﻿using Aplicacion.AplicacionParametros;
 using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;

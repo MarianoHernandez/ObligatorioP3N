@@ -1,4 +1,4 @@
-﻿using Negocio.Entidades;
+﻿using Negocio.EntidadesAuxiliares;
 using System;
 
 namespace Aplicacion.AplicacionParametros

@@ -21,6 +21,7 @@ namespace Negocio.Entidades
     public class Cabania : IValidable
     {
         [DisplayName("Numero Habitacion")]
+        
         public int Id { get; set; }
 
         public TipoCabania TipoCabania { get; set; }
