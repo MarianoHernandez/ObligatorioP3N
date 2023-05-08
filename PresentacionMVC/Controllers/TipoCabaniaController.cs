@@ -9,6 +9,7 @@ using Negocio.EntidadesAuxiliares;
 using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
 using PresentacionMVC.Models;
+using System;
 
 
 namespace PresentacionMVC.Controllers
@@ -114,14 +115,21 @@ namespace PresentacionMVC.Controllers
                 ValidarLogin.Validar(userEmail);
                 TipoCabania tipo = FindByName.FindOne(nombre);
                 return View(tipo);
-            }catch (LoginIncorrectoException ex)
+            }
+            catch (LoginIncorrectoException ex)
             {
                 TempData["Error"] = "Es necesario iniciar sesion";
                 return RedirectToAction("Login", "Usuario");
-            }catch (Exception ex)
+            }
+            catch (NoEncontradoException ex) {
+                TempData["Error"] = "No se encontro el Tipo";
+                return RedirectToAction(nameof(FindOne), new { accion = "Detalle" });
+            }
+
+            catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View(ex);
+                return View();
             }
         }
 
