@@ -1,5 +1,5 @@
 ﻿using Datos.Entity;
-using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -18,9 +18,9 @@ namespace Datos.Repositorios
             LibreriaContext = libreriaContext;
         }
 
-        public Parametro ObtenerParametrosCabania()
+        public Parametro ObtenerParametros(string nombre)
         {
-            return LibreriaContext.Parametro.Where(par => par.Nombre == "Cabania").SingleOrDefault();
+            return LibreriaContext.Parametro.Where(par => par.Nombre == nombre).SingleOrDefault();
         }
 
         public Parametro ObtenerParametrosTipo()
@@ -30,9 +30,7 @@ namespace Datos.Repositorios
 
         public void Add(Parametro obj)
         {
-            obj.Validar();
-            LibreriaContext.Parametro.Add(obj);
-            LibreriaContext.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public void Remove(int id)
@@ -52,7 +50,17 @@ namespace Datos.Repositorios
 
         public void Update(Parametro obj)
         {
-            throw new NotImplementedException();
+            obj.Validar();
+            Parametro actualizar = ObtenerParametros(obj.Nombre);
+            if (actualizar == null)
+            {
+                throw new Exception("No se encontro a que elemento quiere cambiarle el ladrgo de la descripcion");
+            }
+            actualizar.ValorMinimo = obj.ValorMinimo ;
+            actualizar.ValorMaximo = obj.ValorMaximo ;
+            actualizar.Validar();
+            LibreriaContext.Parametro.Update(actualizar);
+            LibreriaContext.SaveChanges();
         }
     }
 }

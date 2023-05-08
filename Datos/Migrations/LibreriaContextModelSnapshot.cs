@@ -96,29 +96,6 @@ namespace Datos.Migrations
                     b.ToTable("Mantenimiento");
                 });
 
-            modelBuilder.Entity("Negocio.Entidades.Parametro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ValorMaximo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ValorMinimo")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Parametro");
-                });
-
             modelBuilder.Entity("Negocio.Entidades.TipoCabania", b =>
                 {
                     b.Property<int>("Id")
@@ -168,6 +145,32 @@ namespace Datos.Migrations
                         .IsUnique();
 
                     b.ToTable("Usuario");
+                });
+
+            modelBuilder.Entity("Negocio.EntidadesAuxiliares.Parametro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ValorMaximo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValorMinimo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("Parametro");
                 });
 
             modelBuilder.Entity("Negocio.Entidades.Cabania", b =>

@@ -1,4 +1,4 @@
-﻿using Negocio.Entidades;
+﻿using Negocio.EntidadesAuxiliares;
 using Negocio.InterfacesRepositorio;
 
 namespace Aplicacion.AplicacionParametros
@@ -14,9 +14,9 @@ namespace Aplicacion.AplicacionParametros
         }
 
 
-        public Parametro ObtenerMaxMinDescripcion()
+        public Parametro ObtenerMaxMinDescripcion(string nombre)
         {
-            return Repo.ObtenerParametrosCabania();
+            return Repo.ObtenerParametros(nombre);
                 
         }
     }

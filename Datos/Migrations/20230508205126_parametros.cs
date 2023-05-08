@@ -5,7 +5,7 @@
 namespace Datos.Migrations
 {
     /// <inheritdoc />
-    public partial class nuevaFoto : Migration
+    public partial class parametros : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

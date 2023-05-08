@@ -1,4 +1,6 @@
-﻿using Negocio.Entidades;
+﻿using Aplicacion.AplicacionParametros;
+using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,10 @@ namespace Aplicacion.AplicacionesTipoCabaña
     {
         public IRepositorioTipoCabania Repositorio { get; set; }
 
+
         public AltaTipoCabania(IRepositorioTipoCabania repo) { 
             Repositorio = repo;
+
         }
 
         public void Alta(TipoCabania tipoCabania)

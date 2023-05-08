@@ -5,6 +5,7 @@ using Aplicacion.AplicacionParametros;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.ExcepcionesPropias;
 using Negocio.ExcepcionesPropias.Cabanias;
 using NuGet.Protocol;
@@ -25,8 +26,9 @@ namespace PresentacionMVC.Controllers
         IValidarSession ValidarLogin { get; set; }
         IObtenerMaxMinDescripcion SeleccionarMaxMin { get; set; }
         IFindByIdCabania encontrar { get; set; }
+        IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IObtenerMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania,IObtenerMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession,IObtenerMaxMinDescripcion obtenerMaxMin, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -36,6 +38,7 @@ namespace PresentacionMVC.Controllers
             ValidarLogin = validarSession;
             SeleccionarMaxMin = seleccionarMaxMinDescripcion;
             encontrar = enco;
+            ObtenerMaxMin = obtenerMaxMin;
         }
 
 
@@ -98,7 +101,10 @@ namespace PresentacionMVC.Controllers
         {
             try
             {
-                //VmAltaCabania.CabaniaNueva.Validar();
+                Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Cabania");
+                Cabania.largoMaximo = param.ValorMaximo;
+                Cabania.largoMinimo = param.ValorMinimo;
+                VmAltaCabania.CabaniaNueva.Validar();
 
                 string rutaWwwRoot = Env.WebRootPath;
                 string rutaCarpeta = Path.Combine(rutaWwwRoot, "Imagenes");
@@ -130,12 +136,12 @@ namespace PresentacionMVC.Controllers
             catch (DescripcionInvalidaException ex)
             {
                 TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
             catch
             {
                 TempData["Error"] = "Oops! Ocurrió un error inesperado";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Aplicacion.AplicacionParametros;
 using Negocio.Entidades;
+using Negocio.EntidadesAuxiliares;
 using Negocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Aplicacion.AplicacionesCabaña
 
         public void Alta( Cabania cabania)
         {
-            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion();
+            Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Cabania");
             Cabania.largoMaximo = param.ValorMaximo;
             Cabania.largoMinimo = param.ValorMinimo;
             Repo.Add(cabania);

@@ -1,11 +1,11 @@
-﻿using Negocio.Entidades;
+﻿using Negocio.EntidadesAuxiliares;
 using System;
 
 namespace Aplicacion.AplicacionParametros
 {
     public interface IObtenerMaxMinDescripcion
     {
-        Parametro ObtenerMaxMinDescripcion();
+        Parametro ObtenerMaxMinDescripcion(string nombre);
 
     }
 }
