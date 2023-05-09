@@ -85,5 +85,15 @@ namespace Datos.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Mantenimiento> FindByCabania(string nombre) {
+            IEnumerable<Mantenimiento> lista = Contexto.Mantenimiento
+                .Include(o => o.cabania)
+                .Where(man => man.cabania.Nombre == nombre)
+                .ToList();
+
+            return lista;
+        }
+
     }
 }

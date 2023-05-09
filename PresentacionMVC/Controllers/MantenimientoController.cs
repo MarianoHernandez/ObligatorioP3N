@@ -23,9 +23,10 @@ namespace PresentacionMVC.Controllers
         IFindByDate FindByDates { get; set; }
         IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
+        IFindByCabania FindByCabania { get; set; }
 
         public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento,
-           IValidarSession validarSession, IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania)
+           IValidarSession validarSession, IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania, IFindByCabania findByCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
@@ -34,6 +35,7 @@ namespace PresentacionMVC.Controllers
             FindByDates = findByDates;
             Env = webHostEnvironment;
             ListadoCabania = listadoCabania;
+            FindByCabania = findByCabania;
         }
 
         // GET: ManteniminetoController
@@ -64,6 +66,12 @@ namespace PresentacionMVC.Controllers
 
             return View();
         }
+        public ActionResult ListByCabania(string nombre)
+        {
+            
+            return View(FindByCabania.FindMantenimientoByCabania(nombre));
+        }
+
 
         // GET: ManteniminetoController/Create
         public ActionResult Create()
@@ -207,5 +215,6 @@ namespace PresentacionMVC.Controllers
                 return View();
             }
         }
+        
     }
 }
