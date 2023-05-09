@@ -24,9 +24,11 @@ namespace PresentacionMVC.Controllers
         IListadoCabania ListadoCabania { get; set; }
         IWebHostEnvironment Env { get; set; }
         IFindByCabania FindByCabania { get; set; }
+        IFindByIdCabania FindByIdCabania { get; set; }
 
         public MantenimientoController(IAltaMantenimiento altaMantenimiento, IListadoMantenimiento listadoMantenimiento, IDeleteMantenimiento deleteMantenimiento,
-           IValidarSession validarSession, IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania, IFindByCabania findByCabania)
+           IValidarSession validarSession, IFindByDate findByDates, IWebHostEnvironment webHostEnvironment, IListadoCabania listadoCabania, IFindByCabania findByCabania,
+            IFindByIdCabania findByIdCabania)
         {
             AltaMantenimiento = altaMantenimiento;
             ListadoMantenimiento = listadoMantenimiento;
@@ -36,6 +38,7 @@ namespace PresentacionMVC.Controllers
             Env = webHostEnvironment;
             ListadoCabania = listadoCabania;
             FindByCabania = findByCabania;
+            FindByIdCabania = findByIdCabania;
         }
 
         // GET: ManteniminetoController
@@ -74,11 +77,11 @@ namespace PresentacionMVC.Controllers
 
 
         // GET: ManteniminetoController/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
             AltaMantenimientoViewModel vm = new AltaMantenimientoViewModel();
 
-            vm.cabanias = ListadoCabania.ListadoAllCabania();
+            vm.IdCabania = id;
 
             return View(vm);
         }
@@ -86,7 +89,7 @@ namespace PresentacionMVC.Controllers
         // POST: ManteniminetoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AltaMantenimientoViewModel VmMantenimiento)
+        public ActionResult Create(AltaMantenimientoViewModel VmMantenimiento )
         {
 
 
