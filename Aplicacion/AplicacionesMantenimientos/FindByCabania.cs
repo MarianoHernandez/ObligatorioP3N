@@ -14,8 +14,8 @@ namespace Aplicacion.AplicacionesMantenimientos
         public FindByCabania(IRepositorioMantenimiento repo) {
             Repo = repo;
         }
-        public IEnumerable<Mantenimiento> FindMantenimientoByCabania(string nombre) {
-           return Repo.FindByCabania(nombre);
+        public IEnumerable<Mantenimiento> FindMantenimientoByCabania(int id) {
+           return Repo.FindByCabania(id);
         }
 
     }

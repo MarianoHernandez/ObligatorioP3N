@@ -90,8 +90,8 @@ else
                 <img src="/Imagenes/@item.Foto" height="100" />
             </td>
             <td>
-                @Html.ActionLink("Create Mantenimiento", "Create","Mantenimiento", new {  nombre=item.Nombre }) |
-                        @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {  nombre=item.Nombre }) |
+                @Html.ActionLink("Create Mantenimiento", "Create","Mantenimiento", new {  id=item.Id }) |
+                        @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {   id=item.Id  }) |
 
             </td>
         </tr>

@@ -10,7 +10,7 @@ namespace Aplicacion.AplicacionesMantenimientos
     public interface IFindByCabania
     {
 
-        public IEnumerable<Mantenimiento> FindMantenimientoByCabania(string nombre);
+        public IEnumerable<Mantenimiento> FindMantenimientoByCabania(int id);
 
     }
 }

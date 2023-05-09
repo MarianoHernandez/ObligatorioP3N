@@ -66,10 +66,10 @@ namespace PresentacionMVC.Controllers
 
             return View();
         }
-        public ActionResult ListByCabania(string nombre)
+        public ActionResult ListByCabania(int id)
         {
             
-            return View(FindByCabania.FindMantenimientoByCabania(nombre));
+            return View(FindByCabania.FindMantenimientoByCabania(id));
         }
 
 

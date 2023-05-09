@@ -86,10 +86,10 @@ namespace Datos.Repositorios
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Mantenimiento> FindByCabania(string nombre) {
+        public IEnumerable<Mantenimiento> FindByCabania(int id) {
             IEnumerable<Mantenimiento> lista = Contexto.Mantenimiento
                 .Include(o => o.cabania)
-                .Where(man => man.cabania.Nombre == nombre)
+                .Where(man => man.cabania.Id == id)
                 .ToList();
 
             return lista;
