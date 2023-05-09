@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Negocio.ExcepcionesPropias;
+using System.ComponentModel.DataAnnotations;
 
 namespace Negocio.Entidades
 {
@@ -13,6 +14,7 @@ namespace Negocio.Entidades
         public DateTime fecha { get; set; }
         public string descripcion { get; set; }
         public decimal costo { get; set; }
+        [Required]
         public string trabajador { get; set; }
         public Cabania cabania { get; set; }
         public int CabaniaId { get; set; }
@@ -30,7 +32,7 @@ namespace Negocio.Entidades
             {
                 throw new CampoVacioException("El campo no puede estar vacio");
             }
-            if (costo == 0)
+            if (costo <= 0)
             {
                 throw new CampoVacioException("El campo no puede estar vacio o mayor a 0");
             }
