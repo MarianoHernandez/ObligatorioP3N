@@ -3,6 +3,7 @@ using Aplicacion.AplicacionesUsuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Negocio.Entidades;
+using Negocio.ExcepcionesPropias;
 using Negocio.InterfacesRepositorio;
 using System.Net;
 
@@ -54,9 +55,14 @@ namespace PresentacionMVC.Controllers
                 TempData["Bien"] = "Se inicio sesión correctamente";
                 return RedirectToAction("Index", "Cabania");
             }
-            catch (Exception)
+             catch (LoginIncorrectoException ex)
             {
-                TempData["Error"] = "Usuario o contraseña incorrecto";
+                TempData["Error"] = ex.Message;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] =ex.Message;
                 return View();
             }
         }
