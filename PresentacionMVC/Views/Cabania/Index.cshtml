@@ -13,75 +13,87 @@
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<h1>Index</h1>
+<h1>Listado Cabaña</h1>
 
-<p> @ViewBag.Mensaje</p>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoCabania)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Jacuzzi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Habilitada)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.CantidadPersonas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Foto)
-            </th>
-            
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-               @Html.DisplayFor(modelItem => item.TipoCabania.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Jacuzzi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Habilitada)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadPersonas)
-            </td>
-            <td>
-                    <img src="/Imagenes/@item.Foto" height="100" />
-            </td>
-        </tr>
+@if (Model.Count() == 0)
+{
+    <div>No se encontraron Cabañas</div>
 }
-    </tbody>
-</table>
+else
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Jacuzzi)
+                </th>
+                <th>
+                    Nombre Tipo
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoCabania.Costo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habilitada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Foto)
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
 
 
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Jacuzzi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoCabania.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoCabania.Costo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habilitada)
+                    </td>
+                    <td>
+                        <img src="/Imagenes/@item.Foto" height="100" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Create Mantenimiento", "Create","Mantenimiento", new {  id=item.Id }) |
+                        @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {   id=item.Id  }) |
+
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+}

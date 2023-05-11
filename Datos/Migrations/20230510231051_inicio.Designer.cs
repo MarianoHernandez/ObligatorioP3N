@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datos.Migrations
 {
     [DbContext(typeof(LibreriaContext))]
-    [Migration("20230508225715_laksdjlajdl")]
-    partial class laksdjlajdl
+    [Migration("20230510231051_inicio")]
+    partial class inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

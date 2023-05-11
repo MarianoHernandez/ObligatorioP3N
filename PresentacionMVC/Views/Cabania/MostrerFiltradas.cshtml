@@ -44,7 +44,7 @@ else
                 @Html.DisplayNameFor(model => model.Jacuzzi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoCabania.Nombre)
+                Nombre Tipo
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoCabania.Costo)
@@ -91,7 +91,7 @@ else
             </td>
             <td>
                 @Html.ActionLink("Create Mantenimiento", "Create","Mantenimiento", new {  id=item.Id }) |
-                        @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {   id=item.Id  }) |
+                @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {   id=item.Id  }) |
 
             </td>
         </tr>

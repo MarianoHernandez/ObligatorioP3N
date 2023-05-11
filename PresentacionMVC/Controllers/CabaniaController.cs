@@ -24,11 +24,10 @@ namespace PresentacionMVC.Controllers
         IBusquedaConFiltros BusquedaConFiltros { get; set; }
         IWebHostEnvironment Env { get; set; }
         IValidarSession ValidarLogin { get; set; }
-        IObtenerMaxMinDescripcion SeleccionarMaxMin { get; set; }
-        IFindByIdCabania encontrar { get; set; }
+        IFindByIdCabania Encontrar { get; set; }
         IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
-        public CabaniaController(IAltaCabania altaCabania,IObtenerMaxMinDescripcion seleccionarMaxMinDescripcion, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession,IObtenerMaxMinDescripcion obtenerMaxMin, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
+        public CabaniaController(IAltaCabania altaCabania, IFindByIdCabania enco, IListadoTipoCabania listadoTipoCabania, IListadoCabania listadoCabania, IValidarSession validarSession,IObtenerMaxMinDescripcion obtenerMaxMin, IWebHostEnvironment webHostEnvironment, IBusquedaConFiltros busquedaConFiltros)
         {
             AltaCabania = altaCabania;
             ListadoTipoCabania = listadoTipoCabania;
@@ -36,8 +35,7 @@ namespace PresentacionMVC.Controllers
             Env = webHostEnvironment;
             BusquedaConFiltros = busquedaConFiltros;
             ValidarLogin = validarSession;
-            SeleccionarMaxMin = seleccionarMaxMinDescripcion;
-            encontrar = enco;
+            Encontrar = enco;
             ObtenerMaxMin = obtenerMaxMin;
         }
 
@@ -112,7 +110,7 @@ namespace PresentacionMVC.Controllers
                 FileInfo file = new FileInfo(VmAltaCabania.Foto.FileName);
                 string extension = file.Extension;
 
-                string nomArchivo = VmAltaCabania.CabaniaNueva.Nombre.Replace(" ", "_") + extension;
+                string nomArchivo = VmAltaCabania.CabaniaNueva.Nombre.Replace(" ", "_") +"001"+ extension;
                 string rutaArchivo = Path.Combine(rutaCarpeta, nomArchivo);
 
                 VmAltaCabania.CabaniaNueva.TipoCabaniaId = VmAltaCabania.IdTipoCabania;
@@ -188,7 +186,7 @@ namespace PresentacionMVC.Controllers
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
-                Cabania cab = encontrar.FindById(id);
+                Cabania cab = Encontrar.FindById(id);
                 return View(cab);
             }
             catch (LoginIncorrectoException ex)
@@ -227,6 +225,8 @@ namespace PresentacionMVC.Controllers
                 ValidarLogin.Validar(userEmail);
                 BusquedaCabaniaViewModal BusquedaModal = new BusquedaCabaniaViewModal();
                 BusquedaModal.TiposCabania = ListadoTipoCabania.ObtenerListado();
+                BusquedaModal.Cabanias = ListadoCabania.ListadoAllCabania();
+
                 return View(BusquedaModal);
             }
             catch (LoginIncorrectoException ex)

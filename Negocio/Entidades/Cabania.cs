@@ -37,29 +37,20 @@ namespace Negocio.Entidades
         public static int largoMaximo = 500;
         public static int largoMinimo = 10;
 
-        public string SerializeNombreFoto(string nombreFoto)
-        {
-
-            this.Foto = nombreFoto.Replace(" ", "_");
-            this.Foto += NumeroFoto;
-            this.Foto += ".png";
-            NumeroFoto++;
-            return Foto;
-        }
-
         public void Validar()
         {
             #region Validar Nombre
-            if (!Regex.IsMatch(Nombre, "^[a-zA-Z]+( [a-zA-Z]+)*$"))
-            {
-                throw new NombreInvalidoException("El nombre solo incluye caracteres alfabéticos y espacios embebidos, pero no al principio ni final");
-            }
             if (string.IsNullOrEmpty(Nombre))
             {
 
                 throw new NombreInvalidoException("El nombre no puede ser nulo o vacío");
 
             }
+            if (Regex.IsMatch(Nombre, "^[a-zA-Z]+( [a-zA-Z]+)*$"))
+            {
+                throw new NombreInvalidoException("El nombre solo incluye caracteres alfabéticos y espacios embebidos, pero no al principio ni final");
+            }
+
             #endregion
 
             #region Validar Descripcion

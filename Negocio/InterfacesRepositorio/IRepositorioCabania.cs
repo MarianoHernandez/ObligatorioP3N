@@ -11,7 +11,6 @@ namespace Negocio.InterfacesRepositorio
     public interface IRepositorioCabania : IRepositorio<Cabania>
     {
         IEnumerable<Cabania> FindCabaña(string nombre, int tipo, int cantidadPers, bool habilitada  );
-        void ValorDescripcion(int max, int min);
         IEnumerable<Cabania>  FindCabañaTipo(string nombre);
     }
 }

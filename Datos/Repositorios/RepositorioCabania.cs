@@ -55,9 +55,9 @@ namespace Datos.Repositorios
                 lista = lista.Where(cab => cab.TipoCabaniaId == tipoId);
             }if (cantidadPers > 0) { 
                 lista = lista.Where(cab => cab.CantidadPersonas >= cantidadPers);
-            }if (habilitada) {
-                lista = lista.Where(cab => cab.Habilitada == habilitada);
             }
+            lista = lista.Where(cab => cab.Habilitada == habilitada);
+            
             return lista.ToList();
         }
 
@@ -76,12 +76,6 @@ namespace Datos.Repositorios
         {
             throw new NotImplementedException();
 
-        }
-
-        public void ValorDescripcion(int max, int min)
-        {
-            Cabania.largoMinimo = min;
-            Cabania.largoMaximo = max;
         }
     }
 }

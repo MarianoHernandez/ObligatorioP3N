@@ -56,12 +56,90 @@
         </form>
     </div>
 </div>
-<div>
-    <a asp-controller="Mantenimiento" asp-action="Create"> Ingresar Mantenimiento</a>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<hr />
+
+@if (Model.Cabanias.Count() == 0)
+{
+    <div>No se encontraron Cabañas</div>
+}
+else
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Numero Habitacion
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripcion
+                </th>
+                <th>
+                    Jacuzzi
+                </th>
+                <th>
+                    Nombre Tipo
+                </th>
+                <th>
+                    Costo
+                </th>
+                <th>
+                    Habilitada
+                </th>
+                <th>
+                    Foto
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+            @foreach (var item in Model.Cabanias)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Jacuzzi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoCabania.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoCabania.Costo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habilitada)
+                    </td>
+                    <td>
+                        <img src="/Imagenes/@item.Foto" height="100" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Create Mantenimiento", "Create","Mantenimiento", new {  id=item.Id }) |
+                        @Html.ActionLink("Mostrar mantenimiento", "ListByCabania","Mantenimiento", new {   id=item.Id  }) |
+
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+}
 
 
 @section Scripts {

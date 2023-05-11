@@ -9,5 +9,7 @@ namespace PresentacionMVC.Models
         public int CantidadPersonas;
         public bool Habilitada;
         public IEnumerable<TipoCabania> TiposCabania { get; set; }
+        public IEnumerable<Cabania> Cabanias { get; set; }
+
     }
 }

@@ -25,7 +25,7 @@ namespace PresentacionMVC.Controllers
         IValidarSession ValidarLogin { get; set; }
         IFindCabaniaPorTipo FindCabaniaPorTipo { get; set; }
 
-       IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
+        IObtenerMaxMinDescripcion ObtenerMaxMin { get; set; }
 
 
         public TipoCabaniaController(IFindCabaniaPorTipo findCabaniaPorTipo, IAltaTipoCabania altaTipoCabania,IValidarSession validarSession, IListadoTipoCabania listadoTipoCabania, IFindByName findByName, IDeleteTipo deleteTipo, IUpdateTipo updateTipo, IObtenerMaxMinDescripcion obtenerMaxMin)
@@ -277,6 +277,7 @@ namespace PresentacionMVC.Controllers
             {
                 string userEmail = HttpContext.Session.GetString("user");
                 ValidarLogin.Validar(userEmail);
+
                 return View(FindByName.FindOne(nombre));
             }
             catch (LoginIncorrectoException ex)
@@ -303,6 +304,9 @@ namespace PresentacionMVC.Controllers
                 TipoCabania tipo = FindByName.FindOne(nombre);
                 tipo.Costo = tipoEditado.Costo;
                 tipo.Descripcion = tipoEditado.Descripcion;
+                Parametro param = ObtenerMaxMin.ObtenerMaxMinDescripcion("Tipo");
+                TipoCabania.largoMaximo = param.ValorMaximo;
+                TipoCabania.largoMinimo = param.ValorMinimo;
                 tipo.Validar();
                 UpdateTipo.Update(tipo);
                 return RedirectToAction(nameof(Index));
